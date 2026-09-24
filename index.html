@@ -2,7 +2,9 @@
 :root{--bg:#f9f9fc;--c-bg:#fff;--txt:#111;--hnt:#8e8e93;--prm:#000;--prm-t:#fff;}body{font-family:-apple-system,Arial,sans-serif;background:var(--bg);color:var(--txt);margin:0;padding:70px 16px 30px 16px;-webkit-user-select:none;}
 header{position:fixed;top:0;left:0;right:0;height:60px;background:var(--c-bg);display:grid;grid-template-columns:50px 1fr 50px;align-items:center;padding:0 10px;border-bottom:1px solid rgba(0,0,0,0.05);z-index:100;box-sizing:border-box;}
 .m-t{background:none;border:none;color:var(--txt);cursor:pointer;padding:0;text-align:left;width:40px;margin-left:5px;display:flex;align-items:center;}
-.m-t svg, .c-m svg, .nav-icon svg, .sub-icon svg, .back-btn svg{width:20px;height:22px;stroke:currentColor;stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:middle;}
+/* ОБНОВЛЕННЫЕ СТИЛИ ДЛЯ ПЛОТНЫХ ЗАЛИТЫХ ИКОНОК */
+.m-t svg, .c-m svg, .back-btn svg{width:20px;height:22px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:middle;}
+.nav-icon svg, .sub-icon svg{width:18px;height:18px;fill:currentColor;display:inline-block;vertical-align:middle;flex-shrink:0;}
 header h1{font-size:16px;font-weight:900;text-transform:uppercase;letter-spacing:2px;margin:0;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .c-b{background:none;border:none;position:relative;cursor:pointer;padding:5px;display:flex;align-items:center;justify-content:flex-end;width:40px;margin-right:5px;color:var(--txt);}
 .c-b svg{width:24px;height:24px;stroke:currentColor;stroke-width:1.6;fill:none;}
@@ -23,7 +25,7 @@ header h1{font-size:16px;font-weight:900;text-transform:uppercase;letter-spacing
 .sub{display:none;flex-direction:column;gap:2px;padding-left:15px;margin:2px 0 5px 0;}.sub.open{display:flex;}
 .s-btn{width:100%;padding:10px 15px;font-size:13px;font-weight:600;text-align:left;border:none;background:transparent;color:var(--hnt);cursor:pointer;display:flex;align-items:center;gap:10px;}
 .s-btn.active{color:var(--txt);font-weight:700;background:rgba(0,0,0,0.03);border-radius:6px;}
-.nav-icon, .sub-icon{display:flex;align-items:center;justify-content:center;color:currentColor;flex-shrink:0;}.sub-icon svg{width:18px;height:18px;stroke-width:1.6;}
+.nav-icon, .sub-icon{display:flex;align-items:center;justify-content:center;color:currentColor;flex-shrink:0;}
 .page{display:none;}.page.active{display:block;}
 .w-blk{background:var(--c-bg);border-radius:16px;padding:24px;text-align:center;box-shadow:0 4px 16px rgba(0,0,0,0.02);border:1px solid rgba(0,0,0,0.04);margin-top:10px;}
 .w-logo{font-size:42px;font-weight:900;text-transform:uppercase;color:var(--txt);margin-bottom:5px;}
@@ -56,21 +58,22 @@ header h1{font-size:16px;font-weight:900;text-transform:uppercase;letter-spacing
 <div style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);z-index:150;display:none;" id="ovr" onclick="tM(0);"></div>
 <div class="sb" id="sb">
     <div class="sb-h"><div style="font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;color:var(--hnt);">XS NAVIGATION</div><button class="m-t" onclick="tM(0)"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>
-    <div class="p-card" onclick="sP('profile',this)"><div class="m-av"><img class="av-img" id="m-av-img" src="" alt="av"><div class="av-fb" id="m-av-txt"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div></div><div class="u-inf"><div class="u-nm" id="m-unm">Покупатель</div><div class="u-vp">Личный кабинет</div></div></div>
+    <div class="p-card" onclick="sP('profile',this)"><div class="m-av"><img class="av-img" id="m-av-img" src="" alt="av"><div class="av-fb" id="m-av-txt"><svg viewBox="0 0 24 24" style="fill:none;stroke:currentColor;stroke-width:1.8;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div></div><div class="u-inf"><div class="u-nm" id="m-unm">Покупатель</div><div class="u-vp">Личный кабинет</div></div></div>
     <div class="nav">
-        <button class="n-btn active" id="m-n-b" onclick="sP('main',this)"><div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></div> Главная</button>
-        <button class="n-btn" onclick="tS('s-cat',this)"><div class="nav-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></div> Каталог <span class="arrow">▼</span></button>
+        <button class="n-btn active" id="m-n-b" onclick="sP('main',this)"><div class="nav-icon"><svg viewBox="0 0 24 24" style="fill:none;stroke:currentColor;stroke-width:1.8;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></div> Главная</button>
+        <!-- ИКОНКА КАТАЛОГА ЗАМЕНЕНА НА ПЛОТНЫЙ ПРЕМИАЛЬНЫЙ ШОППЕР-ПАКЕТ -->
+        <button class="n-btn" onclick="tS('s-cat',this)"><div class="nav-icon"><svg viewBox="0 0 24 24" style="fill:currentColor;stroke:none;"><path d="M19 7h-3c0-2.21-1.79-4-4-4S8 4.79 8 7H5c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2zm-7-2c1.1 0 2 .9 2 2H10c0-1.1.9-2 2-2z"></path></svg></div> Каталог <span class="arrow">▼</span></button>
+        <!-- НОВЫЕ ПЛОТНЫЕ ВЫРАЗИТЕЛЬНЫЕ ИКОНКИ ДЛЯ ПОДРАЗДЕЛОВ ОДЕЖДЫ -->
         <div class="sub" id="s-cat">
-            <button class="s-btn" id="s-all" onclick="sCC('all',this,'Все товары')"><div class="sub-icon"><svg viewBox="0 0 24 24"><path d="M4 3h16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"></path><path d="M2 7h20M7 2v4M17 2v4"></path></svg></div> Все товары</button>
-            <!-- ИКОНКА ВЕРХНЕЙ ОДЕЖДЫ ИЗМЕНЕНА НА ТКАНОЕ ХУДИ/КОФТУ С МАНЖЕТАМИ -->
-            <button class="s-btn" onclick="sCC('out',this,'Верхняя одежда')"><div class="sub-icon"><svg viewBox="0 0 24 24"><path d="M9 2h6l4 4v3l-2 1v10h-2v2H9v-2H7V10L5 9V6l4-4zM5 6h14M7 10h10M9 2v4m6-4v4"></path></svg></div> Верхняя одежда</button>
-            <button class="s-btn" onclick="sCC('tsh',this,'Футболки')"><div class="sub-icon"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v4h3v12h12V10h3V6l-3-4H6zM6 2v4m12-4v4M9 22V10m6 12V10"></path></svg></div> Футболки</button>
-            <button class="s-btn" onclick="sCC('pnt',this,'Штаны')"><div class="sub-icon"><svg viewBox="0 0 24 24"><path d="M6 2h12v7l2 13h-5v-9h-2v9H5L7 9V2zM6 5h12M6 8h12"></path></svg></div> Штаны</button>
-            <button class="s-btn" onclick="sCC('sh',this,'Обувь')"><div class="sub-icon"><svg viewBox="0 0 24 24"><path d="M4 16h10c2 0 5-1 7-4V9s-4 1-6 1h-4L6 6H2v10l2 3zM2 11h4M12 10v6"></path></svg></div> Обувь</button>
+            <button class="s-btn" id="s-all" onclick="sCC('all',this,'Все товары')"><div class="sub-icon"><svg viewBox="0 0 24 24"><path d="M4 2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm2 4v2h12V6H6zm0 5v2h12v-2H6zm0 5v2h12v-2H6z"></path></svg></div> Все товары</button>
+            <button class="s-btn" onclick="sCC('out',this,'Верхняя одежда')"><div class="sub-icon"><svg viewBox="0 0 24 24"><path d="M8 2h8l4.5 4.5v3.5l-2.5 1v10h-2v2H8v-2H6V11L3.5 10V6.5L8 2zm1 4h6V4H9v2z"></path></svg></div> Верхняя одежда</button>
+            <button class="s-btn" onclick="sCC('tsh',this,'Футболки')"><div class="sub-icon"><svg viewBox="0 0 24 24"><path d="M18.5 2L13 5.5V22H11V5.5L5.5 2H3v5l3 3v12h12V10l3-3V2h-2.5z"></path></svg></div> Футболки</button>
+            <button class="s-btn" onclick="sCC('pnt',this,'Штаны')"><div class="sub-icon"><svg viewBox="0 0 24 24"><path d="M5 2h14v6l1.5 14h-5.5v-9h-2v9H5L6.5 8V2z"></path></svg></div> Штаны</button>
+            <button class="s-btn" onclick="sCC('sh',this,'Обувь')"><div class="sub-icon"><svg viewBox="0 0 24 24"><path d="M2 18h13.5c1.5 0 4.5-1 5.5-3.5V9.5s-3.5 1.5-5.5 1.5h-3.5L7 6.5H2v11.5z"></path></svg></div> Обувь</button>
         </div>
-        <button class="n-btn" onclick="oSp()"><div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div> Поддержка</button>
-        <button class="n-btn" onclick="tS('s-oth',this)"><div class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></div> Остальное <span class="arrow">▼</span></button>
-        <div class="sub" id="s-oth"><button class="s-btn" onclick="sP('about',this)"><div class="sub-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></div> О магазине</button></div>
+        <button class="n-btn" onclick="oSp()"><div class="nav-icon"><svg viewBox="0 0 24 24" style="fill:none;stroke:currentColor;stroke-width:1.8;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div> Поддержка</button>
+        <button class="n-btn" onclick="tS('s-oth',this)"><div class="nav-icon"><svg viewBox="0 0 24 24" style="fill:none;stroke:currentColor;stroke-width:1.8;"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></div> Остальное <span class="arrow">▼</span></button>
+        <div class="sub" id="s-oth"><button class="s-btn" onclick="sP('about',this)"><div class="sub-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg></div> О магазине</button></div>
     </div>
 </div>
 <div class="container">
@@ -79,7 +82,7 @@ header h1{font-size:16px;font-weight:900;text-transform:uppercase;letter-spacing
     <div class="page" id="p-shop"><div class="grid-list" id="catalog"></div></div>
     <div class="page" id="p-detail"><div class="p-details" id="product-detail-view"></div></div>
     <div class="page" id="p-cart"><div style="font-size:14px;font-weight:900;letter-spacing:0.5px;color:var(--hnt);margin:10px 0 15px 0;text-transform:uppercase;">// Список покупок</div><div id="cart-items-list"></div></div>
-    <div class="page" id="p-profile"><div style="font-size:14px;font-weight:900;letter-spacing:0.5px;color:var(--hnt);margin:15px 0 12px 0;text-transform:uppercase;">// Аккаунт</div><div class="inf-c"><b style="font-size:16px;" id="p-fn">Покупатель</b><div style="font-size:13px;color:var(--hnt);margin-top:5px;" id="p-id">ID: Не определен</div></div><div style="font-size:14px;font-weight:900;letter-spacing:0.5px;color:var(--hnt);margin:25px 0 12px 0;text-transform:uppercase;">// История покупок</div><div class="inf-c" id="o-hist">У вас пока нет оформленных заказов.</div></div>
+    <div class="page" id="p-profile"><div style="font-size:14px;font-weight:900;letter-spacing:0.5px;color:var(--hnt);margin:15px 0 12px 0;text-transform:uppercase;">//  Аккаунт</div><div class="inf-c"><b style="font-size:16px;" id="p-fn">Покупатель</b><div style="font-size:13px;color:var(--hnt);margin-top:5px;" id="p-id">ID: Не определен</div></div><div style="font-size:14px;font-weight:900;letter-spacing:0.5px;color:var(--hnt);margin:25px 0 12px 0;text-transform:uppercase;">// История покупок</div><div class="inf-c" id="o-hist">У вас пока нет оформленных заказов.</div></div>
     <div class="page" id="p-about"><div style="font-size:14px;font-weight:900;letter-spacing:0.5px;color:var(--hnt);margin:15px 0 12px 0;text-transform:uppercase;">// О магазине XS</div><div class="inf-c"><b>XS OUTFIT</b> — пространство стиля.<br><br>📦 <b>Доставка:</b> СДЭК, Почта России.</div></div>
 </div><div class="zoom-modal" id="zoom-modal" onclick="closeZoom()"><button class="zoom-close">✕</button><img class="zoom-img" id="zoom-img" src="" alt="zoom"></div>
 <script>
@@ -102,7 +105,7 @@ try {
         const user=tg.initDataUnsafe?.user;
         if(user && user.first_name){
             const fn=user.first_name,ln=user.last_name || "";
-            document.getElementById('w-tl').innerText=`Привет, ${fn}!`;document.getElementById('m-unm').innerText=fn;
+            document.getElementById('w-tl').innerText=`Привет, ${fn}!`;document.getElementById('m-unm').innerText=fn;document.getElementById('p-fn').innerText=(fn+" "+ln).trim();
             if(user.id)document.getElementById('p-id').innerText="ID: "+user.id;
             const ai=document.getElementById('m-av-img'),at=document.getElementById('m-av-txt');
             ai.src=`https://dicebear.com{encodeURIComponent(fn)}&backgroundColor=000000&textColor=ffffff`;ai.style.display='block';at.style.display='none';
