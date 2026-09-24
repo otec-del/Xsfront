@@ -20,6 +20,8 @@ header h1{font-size:16px;font-weight:900;text-transform:uppercase;letter-spacing
 .sb-h{display:flex;justify-content:space-between;align-items:center;padding:15px;border-bottom:1px solid rgba(0,0,0,0.05);}
 .c-m{background:none;border:none;color:var(--txt);cursor:pointer;display:flex;align-items:center;font-size:20px;}
 .p-card{background:var(--prm);color:var(--prm-t);margin:15px 12px 10px 12px;padding:14px 12px;border-radius:14px;display:flex;align-items:center;gap:12px;cursor:pointer;}
+</style>
+<style>
 .media-feed{display:flex;flex-direction:column;gap:16px;margin-top:10px;}
 .feed-card{background:var(--c-bg);border-radius:16px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.03);border:1px solid rgba(0,0,0,0.04);position:relative;}
 .feed-video-wrap{width:100%;height:400px;background:#000;position:relative;}
@@ -90,8 +92,8 @@ header h1{font-size:16px;font-weight:900;text-transform:uppercase;letter-spacing
             <button class="s-btn" id="s-all" onclick="sCC('all',this,'Все товары')"><div class="sub-icon"><i class="fa-solid fa-border-all"></i></div> Все товары</button>
             <button class="s-btn" onclick="sCC('out',this,'Верхняя одежда')"><div class="sub-icon"><i class="fa-solid fa-shirt"></i></div> Верхняя одежда</button>
             <button class="s-btn" onclick="sCC('tsh',this,'Футболки')"><div class="sub-icon"><i class="fa-solid fa-shirt"></i></div> Футболки</button>
-            <button class="s-btn" onclick="sCC('pnt',this,'Штаны')"><div class="sub-icon"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor;"><path d="M5 2h14v6l1.5 14h-5.5v-9h-2v9H5L6.5 8V2z"></path></svg></div> Штаны</button>
-            <button class="s-btn" onclick="sCC('sh',this,'Обувь')"><div class="sub-icon"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor;"><path d="M2 18h13.5c1.5 0 4.5-1 5.5-3.5V9.5s-3.5 1.5-5.5 1.5h-3.5L7 6.5H2v11.5z"></path></svg></div> Обувь</button>
+            <button class="s-btn" onclick="sCC('pnt',this,'Штаны')"><div class="sub-icon"><i class="fa-solid fa-socks"></i></div> Штаны</button>
+            <button class="s-btn" onclick="sCC('sh',this,'Обувь')"><div class="sub-icon"><i class="fa-solid fa-shoe-prints"></i></div> Обувь</button>
         </div>
         <button class="n-btn" onclick="oSp()"><div class="nav-icon"><i class="fa-solid fa-comment-dots"></i></div> Поддержка</button>
         <button class="n-btn" onclick="tS('s-oth',this)"><div class="nav-icon"><i class="fa-solid fa-gear"></i></div> Остальное <span class="arrow">▼</span></button>
@@ -172,6 +174,7 @@ try {
         }
     }
 } catch(e) { console.error(e); }
+
 function triggerBackAction() {
     if (navHistory.length > 0) {
         const prev = navHistory.pop();
@@ -227,6 +230,7 @@ let scale = 1;
 function openZoom(url){scale = 1;const m = document.getElementById('zoom-modal');const img = document.getElementById('zoom-img');img.src = url;img.style.transform = `scale(${scale})`;m.classList.add('open');img.onclick = (e) => { e.stopPropagation(); scale = scale === 1 ? 2 : 1; img.style.transform = `scale(${scale})`; };}
 function closeZoom(){document.getElementById('zoom-modal').classList.remove('open');}
 function selS(id,s){selectedSizes[id]=s;openDetails(id);}
+
 function tglDetails(id){
     const p=products.find(x=>x.id===id),sz = selectedSizes[id],cKey=`${id}_${sz}`;
     if(cart[cKey]){delete cart[cKey];delete checkedItems[cKey];}else{cart[cKey]={id:id,name:p.title,price:p.price,size:sz,qty:1};checkedItems[cKey]=true;}
@@ -261,6 +265,9 @@ tg.onEvent('mainButtonClicked',function(){
     let f=`${txt}\nИтого: ${sum.toLocaleString()} ₽`;sOL(f);Object.keys(cart).forEach(k=>{if(checkedItems[k]){delete cart[k];delete checkedItems[k];}});
     tg.sendData("👔 Новый заказ [XS OUTFIT]:\n\n"+f);tg.close();
 });
+
+// ИСПРАВЛЕНО: Перед рендером выбираем первый размер в качестве выбранного по умолчанию
+products.forEach(p => { if (p.sizes && p.sizes.length > 0) { selectedSizes[p.id] = p.sizes[0]; } });
 
 render();lH();
 </script>
