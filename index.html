@@ -24,7 +24,7 @@ header h1{font-size:16px;font-weight:900;text-transform:uppercase;letter-spacing
 .go-btn{width:100%;max-width:200px;padding:12px;background:var(--prm);color:var(--prm-t);border:none;border-radius:10px;font-size:14px;font-weight:bold;cursor:pointer;}
 .grid-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
 .card{background:var(--c-bg);border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.02);border:1px solid rgba(0,0,0,0.04);display:flex;flex-direction:column;cursor:pointer;}
-.img-w{width:100%;height:140px;background:rgba(0,0,0,0.02);display:flex;align-items:center;justify-content:center;font-size:40px;letter-spacing:-10px;padding-right:10px;}
+.img-w{width:100%;height:140px;background:rgba(0,0,0,0.02);display:flex;align-items:center;justify-content:center;font-size:50px;}
 .inf-w{padding:10px;display:flex;flex-direction:column;gap:4px;}
 .title{font-size:14px;font-weight:700;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .price{font-size:14px;font-weight:800;color:var(--txt);}
@@ -36,7 +36,6 @@ header h1{font-size:16px;font-weight:900;text-transform:uppercase;letter-spacing
 .sz-b{padding:8px 14px;font-size:13px;font-weight:bold;border:1px solid #e0e0e0;background:transparent;color:var(--txt);border-radius:8px;cursor:pointer;}
 .sz-b.active{background:var(--prm);color:var(--prm-t);border-color:var(--prm);}
 .act-btn{width:100%;padding:14px;background:var(--prm);color:var(--prm-t);border:none;border-radius:10px;font-size:14px;font-weight:bold;cursor:pointer;margin-top:15px;}
-/* Стили новой отдельной страницы Корзины */
 .c-item{display:flex;align-items:center;gap:12px;background:var(--c-bg);padding:14px;border-radius:12px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,0.02);border:1px solid rgba(0,0,0,0.04);}
 .c-checkbox{width:20px;height:20px;accent-color:var(--prm);cursor:pointer;}
 .c-info{flex:1;min-width:0;}
@@ -54,11 +53,7 @@ header h1{font-size:16px;font-weight:900;text-transform:uppercase;letter-spacing
 <div class="page active" id="p-main"><div class="w-blk"><div class="w-logo">XS OUTFIT</div><div style="font-size:20px;font-weight:700;margin-bottom:10px;" id="w-tl">Добро пожаловать!</div><p class="w-txt">Концептуальный премиум-магазин мужской одежды.</p><button class="go-btn" onclick="goC()">В каталог ➔</button></div></div>
 <div class="page" id="p-shop"><div class="grid-list" id="catalog"></div></div>
 <div class="page" id="p-detail"><div class="p-details" id="product-detail-view"></div></div>
-<!-- ОТДЕЛЬНЫЙ ЭКРАН КОРЗИНЫ -->
-<div class="page" id="p-cart">
-    <div style="font-size:16px;font-weight:800;margin:10px 0 15px 0;">ВЫБЕРИТЕ ТОВАРЫ К ПОКУПКЕ</div>
-    <div id="cart-items-list"></div>
-</div>
+<div class="page" id="p-cart"><div style="font-size:16px;font-weight:800;margin:10px 0 15px 0;">ВЫБЕРИТЕ ТОВАРЫ К ПОКУПКЕ</div><div id="cart-items-list"></div></div>
 <div class="page" id="p-profile"><div style="font-size:16px;font-weight:800;margin:15px 0 12px 0;">АККАУНТ</div><div class="inf-c"><b style="font-size:16px;" id="p-fn">Покупатель</b><div style="font-size:13px;color:var(--hnt);margin-top:5px;" id="p-id">ID: Не определен</div></div><div style="font-size:16px;font-weight:800;margin:25px 0 12px 0;">ИСТОРИЯ ПОКУПОК</div><div class="inf-c" id="o-hist">У вас пока нет оформленных заказов.</div></div>
 <div class="page" id="p-about"><div style="font-size:16px;font-weight:800;margin:15px 0 12px 0;">О МАГАЗИНЕ XS</div><div class="inf-c"><b>XS OUTFIT</b> — пространство стиля.<br><br>📦 <b>Доставка:</b> СДЭК, Почта России.</div></div>
 </div>
@@ -80,35 +75,27 @@ const user=tg.initDataUnsafe?.user;if(user){
     if(fn){ai.src=`https://dicebear.com{encodeURIComponent(fn)}&backgroundColor=000000&textColor=ffffff`;ai.style.display='block';at.style.display='none';}
 }
 function tM(o){document.getElementById('sb').style.left=o?'0':'-280px';document.getElementById('ovr').style.display=o?'block':'none';}
-
 function tS(id,el){document.getElementById(id).classList.toggle('open');const a=el.querySelector('span');if(a)a.innerText=document.getElementById(id).classList.contains('open')?'▲':'▼';}
 
 function sP(pId,el,customTitle){
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
     document.querySelectorAll('.n-btn,.s-btn,.p-card').forEach(b=>b.classList.remove('active'));
     document.getElementById('p-'+pId).classList.add('active');if(el)el.classList.add('active');
-    
     const tls={main:'XS OUTFIT',about:'О магазине',profile:'Профиль',detail:'Товар',cart:'Корзина'};
     document.getElementById('header-title').innerText=customTitle||tls[pId]||'XS OUTFIT';
-    
     if(pId==='shop'||pId==='detail'||pId==='main'||pId==='cart') uB();else tg.MainButton.hide();tM(0);
 }
 function sCC(c,el,titleName){currentCat=c;sP('shop',null,titleName);if(el)el.classList.add('active');render();}
 function goC(){document.getElementById('s-cat').classList.add('open');sCC('all',document.getElementById('s-all'),'Все товары');}
-
-// Функция перехода в отдельный экран корзины
-function oCV(){
-    if(Object.keys(cart).length===0){tg.showAlert("Ваша корзина пуста!");return;}
-    sP('cart',null,'Корзина');
-    renderCartItems();
-}
+function oCV(){if(Object.keys(cart).length===0){tg.showAlert("Ваша корзина пуста!");return;}sP('cart',null,'Корзина');renderCartItems();}
 
 function render(){
     const cat=document.getElementById('catalog');cat.innerHTML='';
     products.forEach(p=>{
         if(currentCat!=='all'&&p.cat!==currentCat)return;
-        const emojiStr = p.emojis.join('');
-        cat.innerHTML+=`<div class="card" onclick="openDetails('${p.id}')"><div class="img-w">${emojiStr}</div><div class="inf-w"><div class="title">${p.title}</div><div class="price">${p.price.toLocaleString()} ₽</div></div></div>`;
+        // ИСПРАВЛЕНО: Берем только первый элемент из массива [0] - главную фотку товара
+        const firstEmoji = p.emojis[0];
+        cat.innerHTML+=`<div class="card" onclick="openDetails('${p.id}')"><div class="img-w">${firstEmoji}</div><div class="inf-w"><div class="title">${p.title}</div><div class="price">${p.price.toLocaleString()} ₽</div></div></div>`;
     });
 }
 function openDetails(id){
@@ -127,99 +114,40 @@ function openDetails(id){
 function selS(id,s){selectedSizes[id]=s;openDetails(id);}
 function tglDetails(id){
     const p=products.find(x=>x.id===id),sz=selectedSizes[id],cKey=`${id}_${sz}`;
-    if(cart[cKey]){
-        delete cart[cKey];
-        delete checkedItems[cKey];
-    }else{
-        cart[cKey]={id:id,name:p.title,price:p.price,size:sz,qty:1};
-        checkedItems[cKey]=true; // По умолчанию галочка на покупку включена
-    }
+    if(cart[cKey]){delete cart[cKey];delete checkedItems[cKey];}else{cart[cKey]={id:id,name:p.title,price:p.price,size:sz,qty:1};checkedItems[cKey]=true;}
     openDetails(id);uB();
 }
-
-// Отрисовка товаров на отдельном экране корзины с галочками (чекбоксами)
 function renderCartItems(){
     const list=document.getElementById('cart-items-list');list.innerHTML='';
     Object.keys(cart).forEach(k=>{
-        const c=cart[k];
-        const isChecked = checkedItems[k] ? 'checked' : '';
-        list.innerHTML+=`<div class="c-item">
-        <input type="checkbox" class="c-checkbox" ${isChecked} onclick="toggleCheck('${k}')">
-        <div class="c-info"><b>${c.name}</b> (${c.size})<br><span style="color:#2481cc;font-weight:bold;">${c.price.toLocaleString()} ₽</span>
-        <div class="qty-box"><button class="qty-btn" onclick="chgQ('${k}',-1)">-</button><span>${c.qty}</span><button class="qty-btn" onclick="chgQ('${k}',1)">+</button></div></div></div>`;
+        const c=cart[k];const isChecked = checkedItems[k] ? 'checked' : '';
+        list.innerHTML+=`<div class="c-item"><input type="checkbox" class="c-checkbox" ${isChecked} onclick="toggleCheck('${k}')"><div class="c-info"><b>${c.name}</b> (${c.size})<br><span style="color:#2481cc;font-weight:bold;">${c.price.toLocaleString()} ₽</span><div class="qty-box"><button class="qty-btn" onclick="chgQ('${k}',-1)">-</button><span>${c.qty}</span><button class="qty-btn" onclick="chgQ('${k}',1)">+</button></div></div></div>`;
     });
 }
-
-// Логика нажатия на галочку товара
-function toggleCheck(k){
-    checkedItems[k] = !checkedItems[k];
-    uB();
-}
-
+function toggleCheck(k){checkedItems[k] = !checkedItems[k];uB();}
 function chgQ(k,d){
     cart[k].qty+=d;if(cart[k].qty<=0){delete cart[k];delete checkedItems[k];}
-    renderCartItems();uB();
-    if(Object.keys(cart).length===0) sP('main',null);
+    renderCartItems();uB();if(Object.keys(cart).length===0) sP('main',null);
 }
-
 function uB(){
     const keys=Object.keys(cart),bdg=document.getElementById('c-bdg');let totalQty=0,sum=0,checkedCount=0;
     keys.forEach(k=>{totalQty+=cart[k].qty;if(checkedItems[k]){sum+=(cart[k].price*cart[k].qty);checkedCount++;}});
     bdg.style.display=totalQty===0?'none':'flex';bdg.innerText=totalQty;
-    
     if(!document.getElementById('p-shop').classList.contains('active')&&!document.getElementById('p-detail').classList.contains('active')&&!document.getElementById('p-cart').classList.contains('active')&&!document.getElementById('p-main').classList.contains('active'))return;
-    
-    if(totalQty===0){tg.MainButton.hide();}
-    else{
-        // Синяя Главная кнопка Telegram теперь показывает сумму только за выбранные галочками вещи
-        if(checkedCount===0){
-            tg.MainButton.setText("Выберите товары галочками");
-        }else{
-            tg.MainButton.setText("Оформить заказ на "+sum.toLocaleString()+" ₽");
-        }
-        tg.MainButton.show();
-    }
+    if(totalQty===0){tg.MainButton.hide();}else{if(checkedCount===0){tg.MainButton.setText("Выберите товары галочками");}else{tg.MainButton.setText("Оформить заказ на "+sum.toLocaleString()+" ₽");}tg.MainButton.show();}
 }
 function sOL(t){let o=JSON.parse(localStorage.getItem('xs_o')||"[]");o.unshift({d:new Date().toLocaleDateString(),t:t});localStorage.setItem('xs_o',JSON.stringify(o));lH();}
 function lH(){
-    let o=JSON.parse(localStorage.getItem('xs_o')||"[]");
-    if(o.length>0){let h="";o.forEach(x=>{h+=`<div style="margin-bottom:10px;padding-bottom:5px;border-bottom:1px dashed #eee;"><b>${x.d}</b><br>${x.t.replace(/\n/g,'<br>')}</div>`;});document.getElementById('o-hist').innerHTML=h;}
+    let o=JSON.parse(localStorage.getItem('xs_o')||"[]");if(o.length>0){let h="";o.forEach(x=>{h+=`<div style="margin-bottom:10px;padding-bottom:5px;border-bottom:1px dashed #eee;"><b>${x.d}</b><br>${x.t.replace(/\n/g,'<br>')}</div>`;});document.getElementById('o-hist').innerHTML=h;}
 }
 function oSp(){tg.openTelegramLink("https://t.me");tM(0);}
-
 tg.onEvent('mainButtonClicked',function(){
-    // Если пользователь находится на других экранах, кнопка просто ведет его в раздел Корзины
-    if(!document.getElementById('p-cart').classList.contains('active')){
-        oCV();
-        return;
-    }
-    
+    if(!document.getElementById('p-cart').classList.contains('active')){oCV();return;}
     let txt="",sum=0,hasChecked=false;
-    Object.keys(cart).forEach(k=>{
-        if(checkedItems[k]){
-            const c=cart[k];
-            txt+=`▪️ ${c.name} (${c.size}) — ${c.qty} шт. х ${c.price.toLocaleString()} ₽\n`;
-            sum+=(c.price*c.qty);
-            hasChecked=true;
-        }
-    });
-    
-    if(!hasChecked){
-        tg.showAlert("Пожалуйста, отметьте галочкой хотя бы один товар для покупки!");
-        return;
-    }
-    
-    let f=`${txt}\nИтого: ${sum.toLocaleString()} ₽`;
-    sOL(f);
-    
-    // Удаляем из корзины только те товары, которые были куплены (остальные остаются лежать в корзине)
-    Object.keys(cart).forEach(k=>{
-        if(checkedItems[k]){
-            delete cart[k];
-            delete checkedItems[k];
-        }
-    });
-    
+    Object.keys(cart).forEach(k=>{if(checkedItems[k]){const c=cart[k];txt+=`▪️ ${c.name} (${c.size}) — ${c.qty} шт. х ${c.price.toLocaleString()} ₽\n`;sum+=(c.price*c.qty);hasChecked=true;}});
+    if(!hasChecked){tg.showAlert("Отметьте галочкой хотя бы один товар!");return;}
+    let f=`${txt}\nИтого: ${sum.toLocaleString()} ₽`;sOL(f);
+    Object.keys(cart).forEach(k=>{if(checkedItems[k]){delete cart[k];delete checkedItems[k];}});
     tg.sendData("👔 Новый заказ [XS OUTFIT]:\n\n"+f);tg.close();
 });
 render();lH();
