@@ -1,10 +1,10 @@
 <!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>XS OUTFIT</title><script src="https://telegram.org"></script><style>
 :root{--bg:#f9f9fc;--c-bg:#fff;--txt:#111;--hnt:#8e8e93;--prm:#000;--prm-t:#fff;}body{font-family:-apple-system,Arial,sans-serif;background:var(--bg);color:var(--txt);margin:0;padding:70px 16px 30px 16px;-webkit-user-select:none;}
-/* Шапка с центрированным текстом и кнопками по краям */
-header{position:fixed;top:0;left:0;right:0;height:60px;background:var(--c-bg);display:flex;align-items:center;justify-content:space-between;padding:0 15px;border-bottom:1px solid rgba(0,0,0,0.05);z-index:100;box-sizing:border-box;}
-.m-t{font-size:24px;background:none;border:none;color:var(--txt);cursor:pointer;padding:0;width:30px;text-align:left;}
-header h1{font-size:18px;font-weight:900;text-transform:uppercase;letter-spacing:2px;margin:0;position:absolute;left:50%;transform:translateX(-50%);text-align:center;width:60%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.c-b{background:none;border:none;position:relative;cursor:pointer;font-size:22px;padding:5px;display:flex;align-items:center;width:30px;justify-content:flex-end;}
+/* ИДЕАЛЬНО ЦЕНТРИРОВАННАЯ ШАПКА НА СЕТКЕ GRID */
+header{position:fixed;top:0;left:0;right:0;height:60px;background:var(--c-bg);display:grid;grid-template-columns:50px 1fr 50px;align-items:center;padding:0 10px;border-bottom:1px solid rgba(0,0,0,0.05);z-index:100;box-sizing:border-box;}
+.m-t{font-size:24px;background:none;border:none;color:var(--txt);cursor:pointer;padding:0;text-align:left;width:40px;margin-left:5px;}
+header h1{font-size:16px;font-weight:900;text-transform:uppercase;letter-spacing:2px;margin:0;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.c-b{background:none;border:none;position:relative;cursor:pointer;font-size:22px;padding:5px;display:flex;align-items:center;justify-content:flex-end;width:40px;margin-right:5px;}
 .badge{position:absolute;top:-2px;right:-2px;background:#d32f2f;color:#fff;font-size:10px;font-weight:bold;border-radius:50%;min-width:16px;height:16px;display:none;align-items:center;justify-content:center;padding:2px;box-sizing:border-box;}
 .sb{position:fixed;top:0;left:-280px;width:270px;height:100%;background:var(--c-bg);box-shadow:4px 0 16px rgba(0,0,0,0.1);z-index:200;transition:left 0.3s ease;display:flex;flex-direction:column;box-sizing:border-box;}
 .sb.open{left:0;}.sb-h{display:flex;justify-content:space-between;align-items:center;padding:15px;border-bottom:1px solid rgba(0,0,0,0.05);}.c-m{font-size:22px;background:none;border:none;color:var(--txt);cursor:pointer;}
@@ -46,7 +46,7 @@ header h1{font-size:18px;font-weight:900;text-transform:uppercase;letter-spacing
 <div class="sb" id="sb"><div class="sb-h"><div style="font-size:16px;font-weight:800;">XS НАВИГАЦИЯ</div><button class="c-m" onclick="tM(0)">✕</button></div>
 <div class="p-card" onclick="sP('profile',this)"><div class="m-av"><img class="av-img" id="m-av-img" src="" alt="av"><div class="av-fb" id="m-av-txt">U</div></div><div class="u-inf"><div class="u-nm" id="m-unm">Покупатель</div><div class="u-vp">Личный кабинет</div></div></div>
 <div class="nav"><button class="n-btn active" id="m-n-b" onclick="sP('main',this)">🏠 Главная</button><button class="n-btn" onclick="tS('s-cat',this)">🛍️ Каталог <span>▼</span></button>
-<div class="sub" id="s-cat"><button class="s-btn" id="s-all" onclick="sCC('all',this,'Все товары')">⚡ Все товары</button><button class="s-btn" onclick="sCC('out',this,'Верхняя одежда')">🧥 Верхняя одежда</button><button class="s-btn" onclick="sCC('tsh',this,'Футболки')">👕 Футболки</button></div>
+<div class="sub" id="s-cat"><button class="s-btn" id="s-all" onclick="sCC('all',this,'Все товары')">⚡ Все товары</button><button class="s-btn" onclick="sCC('out',this,'Верхняя одежда')">🧥  Верхняя одежда</button><button class="s-btn" onclick="sCC('tsh',this,'Футболки')">👕 Футболки</button></div>
 <button class="n-btn" onclick="oSp()">💬 Поддержка</button><button class="n-btn" onclick="tS('s-oth',this)">⚙️ Остальное <span>▼</span></button>
 <div class="sub" id="s-oth"><button class="s-btn" onclick="sP('about',this)">ℹ️ О магазине</button></div></div></div>
 <div class="container">
@@ -67,20 +67,13 @@ const products=[
 ];
 let cart={},selectedSizes={},currentCat='all';products.forEach(p=>{selectedSizes[p.id]=p.sizes;});
 
-const user=tg.initDataUnsafe?.user;
-if(user){
+const user=tg.initDataUnsafe?.user;if(user){
     const fn=user.first_name||"",ln=user.last_name||"";
-    document.getElementById('w-tl').innerText=`Привет, ${fn}!`;
-    document.getElementById('m-unm').innerText=fn;
-    document.getElementById('p-fn').innerText=(fn+" "+ln).trim();
-    if(user.id)document.getElementById('p-id').innerText="ID: "+user.id;
+    document.getElementById('w-tl').innerText=`Привет, ${fn}!`;document.getElementById('m-unm').innerText=fn;
+    document.getElementById('p-fn').innerText=(fn+" "+ln).trim();if(user.id)document.getElementById('p-id').innerText="ID: "+user.id;
     const ai=document.getElementById('m-av-img'),at=document.getElementById('m-av-txt');
-    if(fn){
-        ai.src=`https://dicebear.com{encodeURIComponent(fn)}&backgroundColor=000000&textColor=ffffff`;
-        ai.style.display='block';at.style.display='none';
-    }
+    if(fn){ai.src=`https://dicebear.com{encodeURIComponent(fn)}&backgroundColor=000000&textColor=ffffff`;ai.style.display='block';at.style.display='none';}
 }
-
 function tM(o){document.getElementById('sb').style.left=o?'0':'-280px';document.getElementById('ovr').style.display=o?'block':'none';}
 function tC(o){
     if(o&&Object.keys(cart).length===0){tg.showAlert("Корзина пуста!");return;}
@@ -89,7 +82,7 @@ function tC(o){
 }
 function tS(id,el){document.getElementById(id).classList.toggle('open');const a=el.querySelector('span');if(a)a.innerText=document.getElementById(id).classList.contains('open')?'▲':'▼';}
 
-// Переключение страниц с динамической центрированной шапкой
+// ИСПРАВЛЕННАЯ ФУНКЦИЯ: Теперь кастомное имя четко передается в заголовок
 function sP(pId,el,customTitle){
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
     document.querySelectorAll('.n-btn,.s-btn,.p-card').forEach(b=>b.classList.remove('active'));
