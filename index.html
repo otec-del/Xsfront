@@ -7,7 +7,6 @@ header h1{font-size:16px;font-weight:900;text-transform:uppercase;letter-spacing
 .c-b{background:none;border:none;position:relative;cursor:pointer;padding:5px;display:flex;align-items:center;justify-content:flex-end;width:40px;margin-right:5px;color:var(--txt);}
 .c-b svg{width:24px;height:24px;stroke:currentColor;stroke-width:1.6;fill:none;}
 .badge{position:absolute;top:-2px;right:-2px;background:#d32f2f;color:#fff;font-size:10px;font-weight:bold;border-radius:50%;min-width:16px;height:16px;display:none;align-items:center;justify-content:center;padding:2px;box-sizing:border-box;}
-/* СТИЛЬНАЯ ВНУТРЕННЯЯ КНОПКА НАЗАД ПОД ШАПКОЙ */
 .back-btn{display:none;align-items:center;gap:6px;background:none;border:none;color:var(--txt);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;cursor:pointer;padding:5px 0;margin:5px 0 15px 0;}
 .sb{position:fixed;top:0;left:-280px;width:270px;height:100%;background:var(--c-bg);box-shadow:4px 0 16px rgba(0,0,0,0.1);z-index:200;transition:left 0.3s ease;display:flex;flex-direction:column;box-sizing:border-box;}
 .sb.open{left:0;}.sb-h{display:flex;justify-content:space-between;align-items:center;padding:15px;border-bottom:1px solid rgba(0,0,0,0.05);}.c-m{background:none;border:none;color:var(--txt);cursor:pointer;display:flex;align-items:center;}
@@ -61,10 +60,10 @@ header h1{font-size:16px;font-weight:900;text-transform:uppercase;letter-spacing
     <div class="nav">
         <button class="n-btn active" id="m-n-b" onclick="sP('main',this)"><div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></div> Главная</button>
         <button class="n-btn" onclick="tS('s-cat',this)"><div class="nav-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></div> Каталог <span class="arrow">▼</span></button>
-        <!-- ЭКСКЛЮЗИВНЫЕ ВЕКТОРНЫЕ ИКОНКИ ДЛЯ КАТЕГОРИЙ XS -->
         <div class="sub" id="s-cat">
             <button class="s-btn" id="s-all" onclick="sCC('all',this,'Все товары')"><div class="sub-icon"><svg viewBox="0 0 24 24"><path d="M4 3h16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"></path><path d="M2 7h20M7 2v4M17 2v4"></path></svg></div> Все товары</button>
-            <button class="s-btn" onclick="sCC('out',this,'Верхняя одежда')"><div class="sub-icon"><svg viewBox="0 0 24 24"><path d="M6 2h12l3 6v14H3V8l3-6zM6 2v6m12-6v6M12 2v20M3 8h18"></path></svg></div> Верхняя одежда</button>
+            <!-- ИКОНКА ВЕРХНЕЙ ОДЕЖДЫ ИЗМЕНЕНА НА ТКАНОЕ ХУДИ/КОФТУ С МАНЖЕТАМИ -->
+            <button class="s-btn" onclick="sCC('out',this,'Верхняя одежда')"><div class="sub-icon"><svg viewBox="0 0 24 24"><path d="M9 2h6l4 4v3l-2 1v10h-2v2H9v-2H7V10L5 9V6l4-4zM5 6h14M7 10h10M9 2v4m6-4v4"></path></svg></div> Верхняя одежда</button>
             <button class="s-btn" onclick="sCC('tsh',this,'Футболки')"><div class="sub-icon"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v4h3v12h12V10h3V6l-3-4H6zM6 2v4m12-4v4M9 22V10m6 12V10"></path></svg></div> Футболки</button>
             <button class="s-btn" onclick="sCC('pnt',this,'Штаны')"><div class="sub-icon"><svg viewBox="0 0 24 24"><path d="M6 2h12v7l2 13h-5v-9h-2v9H5L7 9V2zM6 5h12M6 8h12"></path></svg></div> Штаны</button>
             <button class="s-btn" onclick="sCC('sh',this,'Обувь')"><div class="sub-icon"><svg viewBox="0 0 24 24"><path d="M4 16h10c2 0 5-1 7-4V9s-4 1-6 1h-4L6 6H2v10l2 3zM2 11h4M12 10v6"></path></svg></div> Обувь</button>
@@ -75,9 +74,7 @@ header h1{font-size:16px;font-weight:900;text-transform:uppercase;letter-spacing
     </div>
 </div>
 <div class="container">
-    <!-- КНОПКА НАЗАД ВНУТРИ ИНТЕРФЕЙСА (ЛЕВЫЙ ВЕРХНИЙ УГОЛ ПОД ШАПКОЙ) -->
     <button class="back-btn" id="app-back-btn" onclick="triggerBackAction()"><svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg> Назад</button>
-
     <div class="page active" id="p-main"><div class="w-blk"><div class="w-logo">XS OUTFIT</div><div style="font-size:20px;font-weight:700;margin-bottom:10px;" id="w-tl">Добро пожаловать!</div><p class="w-txt">Концептуальный премиум-магазин мужской одежды.</p><button class="go-btn" onclick="goC()">В каталог ➔</button></div></div>
     <div class="page" id="p-shop"><div class="grid-list" id="catalog"></div></div>
     <div class="page" id="p-detail"><div class="p-details" id="product-detail-view"></div></div>
@@ -105,7 +102,7 @@ try {
         const user=tg.initDataUnsafe?.user;
         if(user && user.first_name){
             const fn=user.first_name,ln=user.last_name || "";
-            document.getElementById('w-tl').innerText=`Привет, ${fn}!`;document.getElementById('m-unm').innerText=fn;document.getElementById('p-fn').innerText=(fn+" "+ln).trim();
+            document.getElementById('w-tl').innerText=`Привет, ${fn}!`;document.getElementById('m-unm').innerText=fn;
             if(user.id)document.getElementById('p-id').innerText="ID: "+user.id;
             const ai=document.getElementById('m-av-img'),at=document.getElementById('m-av-txt');
             ai.src=`https://dicebear.com{encodeURIComponent(fn)}&backgroundColor=000000&textColor=ffffff`;ai.style.display='block';at.style.display='none';
@@ -113,7 +110,6 @@ try {
     }
 } catch(e) {}
 
-// ЛОГИКА НАЖАТИЯ НА КНОПКУ НАЗАД ПОД ШАПКОЙ
 function triggerBackAction() {
     if (navHistory.length > 0) {
         const prevState = navHistory.pop();
@@ -135,7 +131,7 @@ function sP(pId,el,customTitle,isBackAction = false){
     if (!isBackAction && activePage && activePage.id !== 'p-' + pId) {
         if (activePage.id === 'p-shop') { navHistory.push({ type: 'category', id: 'shop', cat: currentCat, title: currentTitle }); } 
         else { navHistory.push({ type: 'page', id: activePage.id.replace('p-', ''), title: currentTitle }); }
-        document.getElementById('app-back-btn').style.display = 'flex'; // Показываем внутреннюю кнопку назад под шапкой
+        document.getElementById('app-back-btn').style.display = 'flex';
     }
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.n-btn,.s-btn,.p-card').forEach(b=>b.classList.remove('active'));
     document.getElementById('p-'+pId).classList.add('active');if(el)el.classList.add('active');
