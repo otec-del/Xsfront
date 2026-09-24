@@ -45,7 +45,6 @@ header h1{font-size:16px;font-weight:900;text-transform:uppercase;letter-spacing
 .s-btn{width:100%;padding:10px 15px;font-size:13px;font-weight:600;text-align:left;border:none;background:transparent;color:var(--hnt);cursor:pointer;display:flex;align-items:center;gap:10px;}
 .s-btn.active{color:var(--txt);font-weight:700;background:rgba(0,0,0,0.03);border-radius:6px;}
 .nav-icon, .sub-icon{display:flex;align-items:center;justify-content:center;color:currentColor;flex-shrink:0;font-size:16px;width:20px;text-align:center;}
-.nav-icon svg{width:16px;height:16px;fill:currentColor;}
 .page{display:none;}
 .page.active{display:block;}
 .grid-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
@@ -139,11 +138,8 @@ header h1{font-size:16px;font-weight:900;text-transform:uppercase;letter-spacing
 <script>
 const tg = window.Telegram?.WebApp || {
     MainButton: { show(){}, hide(){}, setText(){} },
-    onEvent(){},
-    close(){},
-    showAlert(txt){ alert(txt); },
-    sendData(txt){ console.log("Данные заказа:", txt); },
-    openTelegramLink(url){ window.open(url, '_blank'); }
+    onEvent(){}, close(){}, showAlert(t){ alert(t); },
+    sendData(t){ console.log("Заказ:", t); }, openTelegramLink(u){ window.open(u, '_blank'); }
 };
 
 const products = [
@@ -157,8 +153,7 @@ const products = [
     {id:'s2',cat:'sh',images:['https://unsplash.com'],title:'Минималистичные Кеды',price:6200,sizes:['40','41','42'],desc:'Безупречный белый цвет.'}
 ];
 
-let cart = {}, selectedSizes = {}, currentCat = 'all', checkedItems = {};
-let navHistory = [];
+let cart = {}, selectedSizes = {}, currentCat = 'all', checkedItems = {}, navHistory = [];
 
 products.forEach(p => { selectedSizes[p.id] = p.sizes[0]; });
 
@@ -177,18 +172,16 @@ try {
         }
     }
 } catch(e) { console.error(e); }
-
 function triggerBackAction() {
     if (navHistory.length > 0) {
-        const prevState = navHistory.pop();
-        if (navHistory.length === 0) { document.getElementById('app-back-btn').style.display = 'none'; }
-        if (prevState.type === 'page') { sP(prevState.id, null, prevState.title, true); } 
-        else if (prevState.type === 'category') { currentCat = prevState.cat; sP('shop', null, prevState.title, true); render(); }
+        const prev = navHistory.pop();
+        if (navHistory.length === 0) document.getElementById('app-back-btn').style.display = 'none';
+        if (prev.type === 'page') sP(prev.id, null, prev.title, true);
+        else if (prev.type === 'category') { currentCat = prev.cat; sP('shop', null, prev.title, true); render(); }
     }
 }
 
 function tM(o){document.getElementById('sb').style.left=o?'0':'-280px';document.getElementById('ovr').style.display=o?'block':'none';}
-
 function tS(id,el){
     document.getElementById(id).classList.toggle('open');
     const a=el.querySelector('span.arrow');
@@ -196,18 +189,19 @@ function tS(id,el){
 }
 
 function sP(pId,el,customTitle,isBackAction = false){
-    const activePage = document.querySelector('.page.active');const currentTitle = document.getElementById('header-title').innerText;
+    const activePage = document.querySelector('.page.active'), currentTitle = document.getElementById('header-title').innerText;
     if (!isBackAction && activePage && activePage.id !== 'p-' + pId) {
-        if (activePage.id === 'p-shop') { navHistory.push({ type: 'category', id: 'shop', cat: currentCat, title: currentTitle }); } 
-        else { navHistory.push({ type: 'page', id: activePage.id.replace('p-', ''), title: currentTitle }); }
+        if (activePage.id === 'p-shop') navHistory.push({ type: 'category', id: 'shop', cat: currentCat, title: currentTitle });
+        else navHistory.push({ type: 'page', id: activePage.id.replace('p-', ''), title: currentTitle });
         document.getElementById('app-back-btn').style.display = 'flex';
     }
-    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.n-btn,.s-btn,.p-card').forEach(b=>b.classList.remove('active'));
-    document.getElementById('p-'+pId).classList.add('active');if(el)el.classList.add('active');
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.n-btn,.s-btn,.p-card').forEach(b=>b.classList.remove('active'));
+    document.getElementById('p-'+pId).classList.add('active'); if(el) el.classList.add('active');
     const tls={main:'XS OUTFIT',about:'О магазине',profile:'Профиль',detail:'XS OUTFIT',cart:'Корзина'};
     document.getElementById('header-title').innerText=customTitle||tls[pId]||'XS OUTFIT';
     if(pId==='main' && !isBackAction) { navHistory = []; document.getElementById('app-back-btn').style.display = 'none'; }
-    if(pId==='shop'||pId==='detail'||pId==='main'||pId==='cart') uB();else tg.MainButton.hide();tM(0);
+    if(['shop','detail','main','cart'].includes(pId)) uB(); else tg.MainButton.hide(); tM(0);
 }
 function sCC(c,el,titleName){currentCat=c;sP('shop',null,titleName);if(el)el.classList.add('active');render();}
 function goC(){document.getElementById('s-cat').classList.add('open');sCC('all',document.getElementById('s-all'),'Все товары');}
@@ -217,7 +211,7 @@ function render(){
     const cat=document.getElementById('catalog');cat.innerHTML='';
     products.forEach(p=>{
         if(currentCat!=='all'&&p.cat!==currentCat)return;
-        cat.innerHTML+=`<div class="card" onclick="openDetails('${p.id}')"><div class="img-w" style="background-image:url('${p.images}')"></div><div class="inf-w"><div class="title">${p.title}</div><div class="price">${p.price.toLocaleString()} ₽</div></div></div>`;
+        cat.innerHTML+=`<div class="card" onclick="openDetails('${p.id}')"><div class="img-w" style="background-image:url('${p.images[0]}')"></div><div class="inf-w"><div class="title">${p.title}</div><div class="price">${p.price.toLocaleString()} ₽</div></div></div>`;
     });
 }
 
@@ -230,10 +224,9 @@ function openDetails(id){
 }
 
 let scale = 1;
-function openZoom(imgUrl){scale = 1;const modal = document.getElementById('zoom-modal');const img = document.getElementById('zoom-img');img.src = imgUrl;img.style.transform = `scale(${scale})`;modal.classList.add('open');img.onclick = (e) => { e.stopPropagation(); scale = scale === 1 ? 2 : 1; img.style.transform = `scale(${scale})`; };}
+function openZoom(url){scale = 1;const m = document.getElementById('zoom-modal');const img = document.getElementById('zoom-img');img.src = url;img.style.transform = `scale(${scale})`;m.classList.add('open');img.onclick = (e) => { e.stopPropagation(); scale = scale === 1 ? 2 : 1; img.style.transform = `scale(${scale})`; };}
 function closeZoom(){document.getElementById('zoom-modal').classList.remove('open');}
 function selS(id,s){selectedSizes[id]=s;openDetails(id);}
-
 function tglDetails(id){
     const p=products.find(x=>x.id===id),sz = selectedSizes[id],cKey=`${id}_${sz}`;
     if(cart[cKey]){delete cart[cKey];delete checkedItems[cKey];}else{cart[cKey]={id:id,name:p.title,price:p.price,size:sz,qty:1};checkedItems[cKey]=true;}
@@ -241,8 +234,7 @@ function tglDetails(id){
 }
 
 function renderCartItems(){
-    const list=document.getElementById('cart-items-list');list.innerHTML='';
-    const keys = Object.keys(cart);
+    const list=document.getElementById('cart-items-list');list.innerHTML='';const keys = Object.keys(cart);
     if(keys.length === 0) { list.innerHTML = '<div class="inf-c">Корзина пуста</div>'; return; }
     keys.forEach(k=>{ const c=cart[k];const isChecked = checkedItems[k] ? 'checked' : ''; list.innerHTML+=`<div class="c-item"><input type="checkbox" class="c-checkbox" ${isChecked} onclick="toggleCheck('${k}')"><div class="c-info"><b>${c.name}</b> (${c.size})<br><span style="color:#2481cc;font-weight:bold;">${c.price.toLocaleString()} ₽</span><div class="qty-box"><button class="qty-btn" onclick="chgQ('${k}',-1)">-</button><span>${c.qty}</span><button class="qty-btn" onclick="chgQ('${k}',1)">+</button></div></div></div>`; });
 }
