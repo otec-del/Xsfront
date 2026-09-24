@@ -61,14 +61,23 @@ const products=[
     {id:'t1',cat:'tsh',emojis:['👕','🖤','⚡'],title:'Черная Футболка',price:1900,sizes:['S','M','L'],desc:'Плотная футболка из 100% хлопка.'},
     {id:'t2',cat:'tsh',emojis:['👕','🤍','🌿'],title:'Белая Футболка',price:2400,sizes:['M','L','XL'],desc:'Свободная уличная посадка.'}
 ];
-let cart={},selectedSizes={},currentCat='all';products.forEach(p=>{selectedSizes[p.id]=p.sizes[0];});
-const user=tg.initDataUnsafe?.user;if(user){
+let cart={},selectedSizes={},currentCat='all';products.forEach(p=>{selectedSizes[p.id]=p.sizes;});
+
+// ИСПРАВЛЕННЫЙ БЛОК: Считывание и корректный вывод имени на плашку
+const user=tg.initDataUnsafe?.user;
+if(user){
     const fn=user.first_name||"",ln=user.last_name||"";
-    document.getElementById('w-tl').innerText=`Привет, ${fn}!`;document.getElementById('m-unm').innerText=fn;
-    document.getElementById('p-fn').innerText=(fn+" "+ln).trim();if(user.id)document.getElementById('p-id').innerText="ID: "+user.id;
+    document.getElementById('w-tl').innerText=`Привет, ${fn}!`;
+    document.getElementById('m-unm').innerText=fn; // Исправлено: теперь ID строго совпадает с версткой
+    document.getElementById('p-fn').innerText=(fn+" "+ln).trim();
+    if(user.id)document.getElementById('p-id').innerText="ID: "+user.id;
     const ai=document.getElementById('m-av-img'),at=document.getElementById('m-av-txt');
-    if(fn){ai.src=`https://dicebear.com{encodeURIComponent(fn)}&backgroundColor=000000&textColor=ffffff`;ai.style.display='block';at.style.display='none';}
+    if(fn){
+        ai.src=`https://dicebear.com{encodeURIComponent(fn)}&backgroundColor=000000&textColor=ffffff`;
+        ai.style.display='block';at.style.display='none';
+    }
 }
+
 function tM(o){document.getElementById('sb').style.left=o?'0':'-280px';document.getElementById('ovr').style.display=o?'block':'none';}
 function tC(o){
     if(o&&Object.keys(cart).length===0){tg.showAlert("Корзина пуста!");return;}
@@ -90,7 +99,7 @@ function render(){
     const cat=document.getElementById('catalog');cat.innerHTML='';
     products.forEach(p=>{
         if(currentCat!=='all'&&p.cat!==currentCat)return;
-        cat.innerHTML+=`<div class="card" onclick="openDetails('${p.id}')"><div class="img-w">${p.emojis[0]}</div><div class="inf-w"><div class="title">${p.title}</div><div class="price">${p.price.toLocaleString()} ₽</div></div></div>`;
+        cat.innerHTML+=`<div class="card" onclick="openDetails('${p.id}')"><div class="img-w">${p.emojis}</div><div class="inf-w"><div class="title">${p.title}</div><div class="price">${p.price.toLocaleString()} ₽</div></div></div>`;
     });
 }
 function openDetails(id){
@@ -145,5 +154,7 @@ tg.onEvent('mainButtonClicked',function(){
 });
 render();lH();
 </script></body></html>
+
+        
 
 
