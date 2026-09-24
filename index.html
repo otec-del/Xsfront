@@ -2,11 +2,13 @@
 :root{--bg:#f9f9fc;--c-bg:#fff;--txt:#111;--hnt:#8e8e93;--prm:#000;--prm-t:#fff;}body{font-family:-apple-system,Arial,sans-serif;background:var(--bg);color:var(--txt);margin:0;padding:70px 16px 30px 16px;-webkit-user-select:none;}
 header{position:fixed;top:0;left:0;right:0;height:60px;background:var(--c-bg);display:grid;grid-template-columns:50px 1fr 50px;align-items:center;padding:0 10px;border-bottom:1px solid rgba(0,0,0,0.05);z-index:100;box-sizing:border-box;}
 .m-t{background:none;border:none;color:var(--txt);cursor:pointer;padding:0;text-align:left;width:40px;margin-left:5px;display:flex;align-items:center;}
-.m-t svg, .c-m svg, .nav-icon svg, .sub-icon svg{width:20px;height:22px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:middle;}
+.m-t svg, .c-m svg, .nav-icon svg, .sub-icon svg, .back-btn svg{width:20px;height:22px;stroke:currentColor;stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:middle;}
 header h1{font-size:16px;font-weight:900;text-transform:uppercase;letter-spacing:2px;margin:0;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .c-b{background:none;border:none;position:relative;cursor:pointer;padding:5px;display:flex;align-items:center;justify-content:flex-end;width:40px;margin-right:5px;color:var(--txt);}
-.c-b svg{width:24px;height:24px;stroke:currentColor;stroke-width:1.8;fill:none;}
+.c-b svg{width:24px;height:24px;stroke:currentColor;stroke-width:1.6;fill:none;}
 .badge{position:absolute;top:-2px;right:-2px;background:#d32f2f;color:#fff;font-size:10px;font-weight:bold;border-radius:50%;min-width:16px;height:16px;display:none;align-items:center;justify-content:center;padding:2px;box-sizing:border-box;}
+/* СТИЛЬНАЯ ВНУТРЕННЯЯ КНОПКА НАЗАД ПОД ШАПКОЙ */
+.back-btn{display:none;align-items:center;gap:6px;background:none;border:none;color:var(--txt);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;cursor:pointer;padding:5px 0;margin:5px 0 15px 0;}
 .sb{position:fixed;top:0;left:-280px;width:270px;height:100%;background:var(--c-bg);box-shadow:4px 0 16px rgba(0,0,0,0.1);z-index:200;transition:left 0.3s ease;display:flex;flex-direction:column;box-sizing:border-box;}
 .sb.open{left:0;}.sb-h{display:flex;justify-content:space-between;align-items:center;padding:15px;border-bottom:1px solid rgba(0,0,0,0.05);}.c-m{background:none;border:none;color:var(--txt);cursor:pointer;display:flex;align-items:center;}
 .p-card{background:var(--prm);color:var(--prm-t);margin:15px 12px 10px 12px;padding:14px 12px;border-radius:14px;display:flex;align-items:center;gap:12px;cursor:pointer;}
@@ -22,7 +24,7 @@ header h1{font-size:16px;font-weight:900;text-transform:uppercase;letter-spacing
 .sub{display:none;flex-direction:column;gap:2px;padding-left:15px;margin:2px 0 5px 0;}.sub.open{display:flex;}
 .s-btn{width:100%;padding:10px 15px;font-size:13px;font-weight:600;text-align:left;border:none;background:transparent;color:var(--hnt);cursor:pointer;display:flex;align-items:center;gap:10px;}
 .s-btn.active{color:var(--txt);font-weight:700;background:rgba(0,0,0,0.03);border-radius:6px;}
-.nav-icon, .sub-icon{display:flex;align-items:center;justify-content:center;color:currentColor;flex-shrink:0;}.sub-icon svg{width:16px;height:16px;stroke-width:2;}
+.nav-icon, .sub-icon{display:flex;align-items:center;justify-content:center;color:currentColor;flex-shrink:0;}.sub-icon svg{width:18px;height:18px;stroke-width:1.6;}
 .page{display:none;}.page.active{display:block;}
 .w-blk{background:var(--c-bg);border-radius:16px;padding:24px;text-align:center;box-shadow:0 4px 16px rgba(0,0,0,0.02);border:1px solid rgba(0,0,0,0.04);margin-top:10px;}
 .w-logo{font-size:42px;font-weight:900;text-transform:uppercase;color:var(--txt);margin-bottom:5px;}
@@ -55,16 +57,17 @@ header h1{font-size:16px;font-weight:900;text-transform:uppercase;letter-spacing
 <div style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);z-index:150;display:none;" id="ovr" onclick="tM(0);"></div>
 <div class="sb" id="sb">
     <div class="sb-h"><div style="font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;color:var(--hnt);">XS NAVIGATION</div><button class="m-t" onclick="tM(0)"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>
-    <div class="p-card" onclick="sP('profile',this)"><div class="m-av"><img class="av-img" id="m-av-img" src="" alt="av"><div class="av-fb" id="m-av-txt"><svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:currentColor;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div></div><div class="u-inf"><div class="u-nm" id="m-unm">Покупатель</div><div class="u-vp">Личный кабинет</div></div></div>
+    <div class="p-card" onclick="sP('profile',this)"><div class="m-av"><img class="av-img" id="m-av-img" src="" alt="av"><div class="av-fb" id="m-av-txt"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div></div><div class="u-inf"><div class="u-nm" id="m-unm">Покупатель</div><div class="u-vp">Личный кабинет</div></div></div>
     <div class="nav">
         <button class="n-btn active" id="m-n-b" onclick="sP('main',this)"><div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></div> Главная</button>
         <button class="n-btn" onclick="tS('s-cat',this)"><div class="nav-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></div> Каталог <span class="arrow">▼</span></button>
+        <!-- ЭКСКЛЮЗИВНЫЕ ВЕКТОРНЫЕ ИКОНКИ ДЛЯ КАТЕГОРИЙ XS -->
         <div class="sub" id="s-cat">
-            <button class="s-btn" id="s-all" onclick="sCC('all',this,'Все товары')"><div class="sub-icon"><svg viewBox="0 0 24 24"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5"></polygon></svg></div> Все товары</button>
-            <button class="s-btn" onclick="sCC('out',this,'Верхняя одежда')"><div class="sub-icon"><svg viewBox="0 0 24 24"><path d="M12 22V12m0 0L4 7.5M12 12l8-4.5M4 5.5l8-3.5 8 3.5v13l-8 3.5-8-3.5v-13z"></path></svg></div> Верхняя одежда</button>
-            <button class="s-btn" onclick="sCC('tsh',this,'Футболки')"><div class="sub-icon"><svg viewBox="0 0 24 24"><path d="M2 9h4v12H2zm16 0h4v12h-4zM6 5l6-3 6 3v4H6z"></path></svg></div> Футболки</button>
-            <button class="s-btn" onclick="sCC('pnt',this,'Штаны')"><div class="sub-icon"><svg viewBox="0 0 24 24"><path d="M7 2h10l3 18h-6v-8h-2v8H4z"></path></svg></div> Штаны</button>
-            <button class="s-btn" onclick="sCC('sh',this,'Обувь')"><div class="sub-icon"><svg viewBox="0 0 24 24"><path d="M3 18h14c1 0 4-1 4-4V9s-3 1-5 1h-4l-5-5H3v17z"></path></svg></div> Обувь</button>
+            <button class="s-btn" id="s-all" onclick="sCC('all',this,'Все товары')"><div class="sub-icon"><svg viewBox="0 0 24 24"><path d="M4 3h16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"></path><path d="M2 7h20M7 2v4M17 2v4"></path></svg></div> Все товары</button>
+            <button class="s-btn" onclick="sCC('out',this,'Верхняя одежда')"><div class="sub-icon"><svg viewBox="0 0 24 24"><path d="M6 2h12l3 6v14H3V8l3-6zM6 2v6m12-6v6M12 2v20M3 8h18"></path></svg></div> Верхняя одежда</button>
+            <button class="s-btn" onclick="sCC('tsh',this,'Футболки')"><div class="sub-icon"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v4h3v12h12V10h3V6l-3-4H6zM6 2v4m12-4v4M9 22V10m6 12V10"></path></svg></div> Футболки</button>
+            <button class="s-btn" onclick="sCC('pnt',this,'Штаны')"><div class="sub-icon"><svg viewBox="0 0 24 24"><path d="M6 2h12v7l2 13h-5v-9h-2v9H5L7 9V2zM6 5h12M6 8h12"></path></svg></div> Штаны</button>
+            <button class="s-btn" onclick="sCC('sh',this,'Обувь')"><div class="sub-icon"><svg viewBox="0 0 24 24"><path d="M4 16h10c2 0 5-1 7-4V9s-4 1-6 1h-4L6 6H2v10l2 3zM2 11h4M12 10v6"></path></svg></div> Обувь</button>
         </div>
         <button class="n-btn" onclick="oSp()"><div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div> Поддержка</button>
         <button class="n-btn" onclick="tS('s-oth',this)"><div class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></div> Остальное <span class="arrow">▼</span></button>
@@ -72,15 +75,18 @@ header h1{font-size:16px;font-weight:900;text-transform:uppercase;letter-spacing
     </div>
 </div>
 <div class="container">
-<div class="page active" id="p-main"><div class="w-blk"><div class="w-logo">XS OUTFIT</div><div style="font-size:20px;font-weight:700;margin-bottom:10px;" id="w-tl">Добро пожаловать!</div><p class="w-txt">Концептуальный премиум-магазин мужской одежды.</p><button class="go-btn" onclick="goC()">В каталог ➔</button></div></div>
-<div class="page" id="p-shop"><div class="grid-list" id="catalog"></div></div>
-<div class="page" id="p-detail"><div class="p-details" id="product-detail-view"></div></div>
-<div class="page" id="p-cart"><div style="font-size:14px;font-weight:900;letter-spacing:0.5px;color:var(--hnt);margin:10px 0 15px 0;text-transform:uppercase;">// Список покупок</div><div id="cart-items-list"></div></div>
-<div class="page" id="p-profile"><div style="font-size:14px;font-weight:900;letter-spacing:0.5px;color:var(--hnt);margin:15px 0 12px 0;text-transform:uppercase;">// Аккаунт</div><div class="inf-c"><b style="font-size:16px;" id="p-fn">Покупатель</b><div style="font-size:13px;color:var(--hnt);margin-top:5px;" id="p-id">ID: Не определен</div></div><div style="font-size:14px;font-weight:900;letter-spacing:0.5px;color:var(--hnt);margin:25px 0 12px 0;text-transform:uppercase;">// История покупок</div><div class="inf-c" id="o-hist">У вас пока нет оформленных заказов.</div></div>
-<div class="page" id="p-about"><div style="font-size:14px;font-weight:900;letter-spacing:0.5px;color:var(--hnt);margin:15px 0 12px 0;text-transform:uppercase;">// О магазине XS</div><div class="inf-c"><b>XS OUTFIT</b> — пространство стиля.<br><br>📦 <b>Доставка:</b> СДЭК, Почта России.</div></div>
+    <!-- КНОПКА НАЗАД ВНУТРИ ИНТЕРФЕЙСА (ЛЕВЫЙ ВЕРХНИЙ УГОЛ ПОД ШАПКОЙ) -->
+    <button class="back-btn" id="app-back-btn" onclick="triggerBackAction()"><svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg> Назад</button>
+
+    <div class="page active" id="p-main"><div class="w-blk"><div class="w-logo">XS OUTFIT</div><div style="font-size:20px;font-weight:700;margin-bottom:10px;" id="w-tl">Добро пожаловать!</div><p class="w-txt">Концептуальный премиум-магазин мужской одежды.</p><button class="go-btn" onclick="goC()">В каталог ➔</button></div></div>
+    <div class="page" id="p-shop"><div class="grid-list" id="catalog"></div></div>
+    <div class="page" id="p-detail"><div class="p-details" id="product-detail-view"></div></div>
+    <div class="page" id="p-cart"><div style="font-size:14px;font-weight:900;letter-spacing:0.5px;color:var(--hnt);margin:10px 0 15px 0;text-transform:uppercase;">// Список покупок</div><div id="cart-items-list"></div></div>
+    <div class="page" id="p-profile"><div style="font-size:14px;font-weight:900;letter-spacing:0.5px;color:var(--hnt);margin:15px 0 12px 0;text-transform:uppercase;">// Аккаунт</div><div class="inf-c"><b style="font-size:16px;" id="p-fn">Покупатель</b><div style="font-size:13px;color:var(--hnt);margin-top:5px;" id="p-id">ID: Не определен</div></div><div style="font-size:14px;font-weight:900;letter-spacing:0.5px;color:var(--hnt);margin:25px 0 12px 0;text-transform:uppercase;">// История покупок</div><div class="inf-c" id="o-hist">У вас пока нет оформленных заказов.</div></div>
+    <div class="page" id="p-about"><div style="font-size:14px;font-weight:900;letter-spacing:0.5px;color:var(--hnt);margin:15px 0 12px 0;text-transform:uppercase;">// О магазине XS</div><div class="inf-c"><b>XS OUTFIT</b> — пространство стиля.<br><br>📦 <b>Доставка:</b> СДЭК, Почта России.</div></div>
 </div><div class="zoom-modal" id="zoom-modal" onclick="closeZoom()"><button class="zoom-close">✕</button><img class="zoom-img" id="zoom-img" src="" alt="zoom"></div>
 <script>
-const tg=window.Telegram?.WebApp||{MainButton:{show(){},hide(){},setText(){}},BackButton:{show(){},hide(){},onClick(){}},onEvent(){},close(){}};
+const tg=window.Telegram?.WebApp||{MainButton:{show(){},hide(){},setText(){}},onEvent(){},close(){}};
 const products=[
     {id:'o1',cat:'out',images:['https://unsplash.com'],title:'Шерстяное Пальто',price:12500,sizes:['M','L','XL'],desc:'Премиальное шерстяное пальто классического кроя.'},
     {id:'o2',cat:'out',images:['https://unsplash.com'],title:'Кожаная Куртка',price:9800,sizes:['S','M','L'],desc:'Куртка из мягкой эко-кожи.'},
@@ -107,32 +113,35 @@ try {
     }
 } catch(e) {}
 
-if(window.Telegram?.WebApp?.BackButton) {
-    tg.BackButton.onClick(function() {
-        if (navHistory.length > 0) {
-            const prevState = navHistory.pop();
-            if (navHistory.length === 0) { tg.BackButton.hide(); }
-            if (prevState.type === 'page') { sP(prevState.id, null, prevState.title, true); } 
-            else if (prevState.type === 'category') { currentCat = prevState.cat; sP('shop', null, prevState.title, true); render(); }
-        }
-    });
+// ЛОГИКА НАЖАТИЯ НА КНОПКУ НАЗАД ПОД ШАПКОЙ
+function triggerBackAction() {
+    if (navHistory.length > 0) {
+        const prevState = navHistory.pop();
+        if (navHistory.length === 0) { document.getElementById('app-back-btn').style.display = 'none'; }
+        if (prevState.type === 'page') { sP(prevState.id, null, prevState.title, true); } 
+        else if (prevState.type === 'category') { currentCat = prevState.cat; sP('shop', null, prevState.title, true); render(); }
+    }
 }
 
 function tM(o){document.getElementById('sb').style.left=o?'0':'-280px';document.getElementById('ovr').style.display=o?'block':'none';}
-function tS(id,el){document.getElementById(id).classList.toggle('open');const a=el.querySelector('span.arrow');if(a) a.style.transform = document.getElementById(id).classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';}
+function tS(id,el){
+    document.getElementById(id).classList.toggle('open');
+    const a=el.querySelector('span.arrow');
+    if(a) a.style.transform = document.getElementById(id).classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
+}
 
 function sP(pId,el,customTitle,isBackAction = false){
     const activePage = document.querySelector('.page.active');const currentTitle = document.getElementById('header-title').innerText;
     if (!isBackAction && activePage && activePage.id !== 'p-' + pId) {
         if (activePage.id === 'p-shop') { navHistory.push({ type: 'category', id: 'shop', cat: currentCat, title: currentTitle }); } 
         else { navHistory.push({ type: 'page', id: activePage.id.replace('p-', ''), title: currentTitle }); }
-        tg.BackButton.show();
+        document.getElementById('app-back-btn').style.display = 'flex'; // Показываем внутреннюю кнопку назад под шапкой
     }
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.n-btn,.s-btn,.p-card').forEach(b=>b.classList.remove('active'));
     document.getElementById('p-'+pId).classList.add('active');if(el)el.classList.add('active');
     const tls={main:'XS OUTFIT',about:'О магазине',profile:'Профиль',detail:'XS OUTFIT',cart:'Корзина'};
     document.getElementById('header-title').innerText=customTitle||tls[pId]||'XS OUTFIT';
-    if(pId==='main' && !isBackAction) { navHistory = []; tg.BackButton.hide(); }
+    if(pId==='main' && !isBackAction) { navHistory = []; document.getElementById('app-back-btn').style.display = 'none'; }
     if(pId==='shop'||pId==='detail'||pId==='main'||pId==='cart') uB();else tg.MainButton.hide();tM(0);
 }
 function sCC(c,el,titleName){currentCat=c;sP('shop',null,titleName);if(el)el.classList.add('active');render();}
