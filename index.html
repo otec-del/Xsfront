@@ -58,7 +58,7 @@ header h1{font-size:16px;font-weight:900;text-transform:uppercase;letter-spacing
 <div class="page" id="p-about"><div style="font-size:16px;font-weight:800;margin:15px 0 12px 0;">О МАГАЗИНЕ XS</div><div class="inf-c"><b>XS OUTFIT</b> — пространство стиля.<br><br>📦 <b>Доставка:</b> СДЭК, Почта России.</div></div>
 </div>
 <script>
-const tg=window.Telegram?.WebApp||{MainButton:{show(){},hide(){},setText(){}},onEvent(){},close(){}};if(window.Telegram?.WebApp){tg.ready();tg.expand();}
+const tg=window.Telegram?.WebApp||{MainButton:{show(){},hide(){},setText(){}},onEvent(){},close(){}};
 const products=[
     {id:'o1',cat:'out',emojis:['🧥','✨','👑'],title:'Шерстяное Пальто',price:12500,sizes:['M','L','XL'],desc:'Премиальное шерстяное пальто итальянского кроя.'},
     {id:'o2',cat:'out',emojis:['🧥','🔥','💨'],title:'Осенний Бомбер',price:7900,sizes:['S','M','L'],desc:'Стильный оверсайз бомбер с водозащитой.'},
@@ -67,14 +67,29 @@ const products=[
 ];
 let cart={},selectedSizes={},currentCat='all',checkedItems={};products.forEach(p=>{selectedSizes[p.id]=p.sizes;});
 
-const user=tg.initDataUnsafe?.user;if(user){
-    const fn=user.first_name||"",ln=user.last_name||"";
-    document.getElementById('w-tl').innerText=`Привет, ${fn}!`;document.getElementById('m-unm').innerText=fn;
-    document.getElementById('p-fn').innerText=(fn+" "+ln).trim();if(user.id)document.getElementById('p-id').innerText="ID: "+user.id;
-    const ai=document.getElementById('m-av-img'),at=document.getElementById('m-av-txt');
-    if(fn){ai.src=`https://dicebear.com{encodeURIComponent(fn)}&backgroundColor=000000&textColor=ffffff`;ai.style.display='block';at.style.display='none';}
+// ГАРАНТИРОВАННОЕ РЕШЕНИЕ: Считываем профиль только ПОСЛЕ команды ready() от Telegram
+if(window.Telegram?.WebApp){
+    tg.ready();
+    tg.expand();
+    
+    // Функция авторизации запускается строго после того, как Telegram передал объект user
+    const user=tg.initDataUnsafe?.user;
+    if(user){
+        const fn=user.first_name||"",ln=user.last_name||"";
+        document.getElementById('w-tl').innerText=`Привет, ${fn}!`;
+        document.getElementById('m-unm').innerText=fn;
+        document.getElementById('p-fn').innerText=(fn+" "+ln).trim();
+        if(user.id)document.getElementById('p-id').innerText="ID: "+user.id;
+        const ai=document.getElementById('m-av-img'),at=document.getElementById('m-av-txt');
+        if(fn){
+            ai.src=`https://dicebear.com{encodeURIComponent(fn)}&backgroundColor=000000&textColor=ffffff`;
+            ai.style.display='block';at.style.display='none';
+        }
+    }
 }
+
 function tM(o){document.getElementById('sb').style.left=o?'0':'-280px';document.getElementById('ovr').style.display=o?'block':'none';}
+function tC(o){if(o&&Object.keys(cart).length===0){tg.showAlert("Корзина пуста!");return;}document.getElementById('cart-sheet').style.bottom=o?'0':'-100%';document.getElementById('ovr').style.display=o?'block':'none';if(o){renderCartItems();tg.MainButton.show();}else{uB();}}
 function tS(id,el){document.getElementById(id).classList.toggle('open');const a=el.querySelector('span');if(a)a.innerText=document.getElementById(id).classList.contains('open')?'▲':'▼';}
 
 function sP(pId,el,customTitle){
@@ -85,6 +100,7 @@ function sP(pId,el,customTitle){
     document.getElementById('header-title').innerText=customTitle||tls[pId]||'XS OUTFIT';
     if(pId==='shop'||pId==='detail'||pId==='main'||pId==='cart') uB();else tg.MainButton.hide();tM(0);
 }
+ paradox = false;
 function sCC(c,el,titleName){currentCat=c;sP('shop',null,titleName);if(el)el.classList.add('active');render();}
 function goC(){document.getElementById('s-cat').classList.add('open');sCC('all',document.getElementById('s-all'),'Все товары');}
 function oCV(){if(Object.keys(cart).length===0){tg.showAlert("Ваша корзина пуста!");return;}sP('cart',null,'Корзина');renderCartItems();}
@@ -93,7 +109,6 @@ function render(){
     const cat=document.getElementById('catalog');cat.innerHTML='';
     products.forEach(p=>{
         if(currentCat!=='all'&&p.cat!==currentCat)return;
-        // ИСПРАВЛЕНО: Берем только первый элемент из массива [0] - главную фотку товара
         const firstEmoji = p.emojis[0];
         cat.innerHTML+=`<div class="card" onclick="openDetails('${p.id}')"><div class="img-w">${firstEmoji}</div><div class="inf-w"><div class="title">${p.title}</div><div class="price">${p.price.toLocaleString()} ₽</div></div></div>`;
     });
