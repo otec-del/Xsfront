@@ -1,6 +1,5 @@
 <!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>XS OUTFIT</title><script src="https://telegram.org"></script><style>
 :root{--bg:#f9f9fc;--c-bg:#fff;--txt:#111;--hnt:#8e8e93;--prm:#000;--prm-t:#fff;}body{font-family:-apple-system,Arial,sans-serif;background:var(--bg);color:var(--txt);margin:0;padding:70px 16px 30px 16px;-webkit-user-select:none;}
-/* ИДЕАЛЬНО ЦЕНТРИРОВАННАЯ ШАПКА НА СЕТКЕ GRID */
 header{position:fixed;top:0;left:0;right:0;height:60px;background:var(--c-bg);display:grid;grid-template-columns:50px 1fr 50px;align-items:center;padding:0 10px;border-bottom:1px solid rgba(0,0,0,0.05);z-index:100;box-sizing:border-box;}
 .m-t{font-size:24px;background:none;border:none;color:var(--txt);cursor:pointer;padding:0;text-align:left;width:40px;margin-left:5px;}
 header h1{font-size:16px;font-weight:900;text-transform:uppercase;letter-spacing:2px;margin:0;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
@@ -25,7 +24,7 @@ header h1{font-size:16px;font-weight:900;text-transform:uppercase;letter-spacing
 .go-btn{width:100%;max-width:200px;padding:12px;background:var(--prm);color:var(--prm-t);border:none;border-radius:10px;font-size:14px;font-weight:bold;cursor:pointer;}
 .grid-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
 .card{background:var(--c-bg);border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.02);border:1px solid rgba(0,0,0,0.04);display:flex;flex-direction:column;cursor:pointer;}
-.img-w{width:100%;height:140px;background:rgba(0,0,0,0.02);display:flex;align-items:center;justify-content:center;font-size:50px;}
+.img-w{width:100%;height:140px;background:rgba(0,0,0,0.02);display:flex;align-items:center;justify-content:center;font-size:40px;letter-spacing:-10px;padding-right:10px;}
 .inf-w{padding:10px;display:flex;flex-direction:column;gap:4px;}
 .title{font-size:14px;font-weight:700;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .price{font-size:14px;font-weight:800;color:var(--txt);}
@@ -37,26 +36,32 @@ header h1{font-size:16px;font-weight:900;text-transform:uppercase;letter-spacing
 .sz-b{padding:8px 14px;font-size:13px;font-weight:bold;border:1px solid #e0e0e0;background:transparent;color:var(--txt);border-radius:8px;cursor:pointer;}
 .sz-b.active{background:var(--prm);color:var(--prm-t);border-color:var(--prm);}
 .act-btn{width:100%;padding:14px;background:var(--prm);color:var(--prm-t);border:none;border-radius:10px;font-size:14px;font-weight:bold;cursor:pointer;margin-top:15px;}
-.cart-sheet{position:fixed;bottom:-100%;left:0;right:0;background:var(--c-bg);border-radius:20px 20px 0 0;box-shadow:0 -5px 25px rgba(0,0,0,0.1);z-index:300;transition:bottom 0.3s ease;padding:20px;max-height:70%;overflow-y:auto;box-sizing:border-box;}
-.cart-sheet.open{bottom:0;}.c-item{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid #eee;}
-.qty-box{display:flex;align-items:center;gap:10px;}.qty-btn{width:28px;height:28px;border-radius:50%;border:1px solid #ccc;background:none;font-weight:bold;cursor:pointer;}
+/* Стили новой отдельной страницы Корзины */
+.c-item{display:flex;align-items:center;gap:12px;background:var(--c-bg);padding:14px;border-radius:12px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,0.02);border:1px solid rgba(0,0,0,0.04);}
+.c-checkbox{width:20px;height:20px;accent-color:var(--prm);cursor:pointer;}
+.c-info{flex:1;min-width:0;}
+.qty-box{display:flex;align-items:center;gap:10px;margin-top:5px;}.qty-btn{width:28px;height:28px;border-radius:50%;border:1px solid #ccc;background:none;font-weight:bold;cursor:pointer;}
 </style></head><body>
-<header><button class="m-t" onclick="tM(1)">☰</button><h1 id="header-title">XS OUTFIT</h1><button class="c-b" onclick="tC(1)">🛒<div class="badge" id="c-bdg">0</div></button></header>
-<div style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);z-index:150;display:none;" id="ovr" onclick="tM(0);tC(0);"></div>
+<header><button class="m-t" onclick="tM(1)">☰</button><h1 id="header-title">XS OUTFIT</h1><button class="c-b" onclick="oCV()">🛒<div class="badge" id="c-bdg">0</div></button></header>
+<div style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);z-index:150;display:none;" id="ovr" onclick="tM(0);"></div>
 <div class="sb" id="sb"><div class="sb-h"><div style="font-size:16px;font-weight:800;">XS НАВИГАЦИЯ</div><button class="c-m" onclick="tM(0)">✕</button></div>
 <div class="p-card" onclick="sP('profile',this)"><div class="m-av"><img class="av-img" id="m-av-img" src="" alt="av"><div class="av-fb" id="m-av-txt">U</div></div><div class="u-inf"><div class="u-nm" id="m-unm">Покупатель</div><div class="u-vp">Личный кабинет</div></div></div>
 <div class="nav"><button class="n-btn active" id="m-n-b" onclick="sP('main',this)">🏠 Главная</button><button class="n-btn" onclick="tS('s-cat',this)">🛍️ Каталог <span>▼</span></button>
 <div class="sub" id="s-cat"><button class="s-btn" id="s-all" onclick="sCC('all',this,'Все товары')">⚡ Все товары</button><button class="s-btn" onclick="sCC('out',this,'Верхняя одежда')">🧥  Верхняя одежда</button><button class="s-btn" onclick="sCC('tsh',this,'Футболки')">👕 Футболки</button></div>
 <button class="n-btn" onclick="oSp()">💬 Поддержка</button><button class="n-btn" onclick="tS('s-oth',this)">⚙️ Остальное <span>▼</span></button>
-<div class="sub" id="s-oth"><button class="s-btn" onclick="sP('about',this)">ℹ️ О магазине</button></div></div></div>
+<div class="sub" id="s-oth"><button class="s-btn" id="s-oth-btn" onclick="sP('about',this)">ℹ️ О магазине</button></div></div></div>
 <div class="container">
 <div class="page active" id="p-main"><div class="w-blk"><div class="w-logo">XS OUTFIT</div><div style="font-size:20px;font-weight:700;margin-bottom:10px;" id="w-tl">Добро пожаловать!</div><p class="w-txt">Концептуальный премиум-магазин мужской одежды.</p><button class="go-btn" onclick="goC()">В каталог ➔</button></div></div>
 <div class="page" id="p-shop"><div class="grid-list" id="catalog"></div></div>
 <div class="page" id="p-detail"><div class="p-details" id="product-detail-view"></div></div>
+<!-- ОТДЕЛЬНЫЙ ЭКРАН КОРЗИНЫ -->
+<div class="page" id="p-cart">
+    <div style="font-size:16px;font-weight:800;margin:10px 0 15px 0;">ВЫБЕРИТЕ ТОВАРЫ К ПОКУПКЕ</div>
+    <div id="cart-items-list"></div>
+</div>
 <div class="page" id="p-profile"><div style="font-size:16px;font-weight:800;margin:15px 0 12px 0;">АККАУНТ</div><div class="inf-c"><b style="font-size:16px;" id="p-fn">Покупатель</b><div style="font-size:13px;color:var(--hnt);margin-top:5px;" id="p-id">ID: Не определен</div></div><div style="font-size:16px;font-weight:800;margin:25px 0 12px 0;">ИСТОРИЯ ПОКУПОК</div><div class="inf-c" id="o-hist">У вас пока нет оформленных заказов.</div></div>
 <div class="page" id="p-about"><div style="font-size:16px;font-weight:800;margin:15px 0 12px 0;">О МАГАЗИНЕ XS</div><div class="inf-c"><b>XS OUTFIT</b> — пространство стиля.<br><br>📦 <b>Доставка:</b> СДЭК, Почта России.</div></div>
 </div>
-<div class="cart-sheet" id="cart-sheet"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;"><div style="font-size:18px;font-weight:bold;">Корзина</div><button class="c-m" onclick="tC(0)">✕</button></div><div id="cart-items-list"></div></div>
 <script>
 const tg=window.Telegram?.WebApp||{MainButton:{show(){},hide(){},setText(){}},onEvent(){},close(){}};if(window.Telegram?.WebApp){tg.ready();tg.expand();}
 const products=[
@@ -65,7 +70,7 @@ const products=[
     {id:'t1',cat:'tsh',emojis:['👕','🖤','⚡'],title:'Черная Футболка',price:1900,sizes:['S','M','L'],desc:'Плотная футболка из 100% хлопка.'},
     {id:'t2',cat:'tsh',emojis:['👕','🤍','🌿'],title:'Белая Футболка',price:2400,sizes:['M','L','XL'],desc:'Свободная уличная посадка.'}
 ];
-let cart={},selectedSizes={},currentCat='all';products.forEach(p=>{selectedSizes[p.id]=p.sizes;});
+let cart={},selectedSizes={},currentCat='all',checkedItems={};products.forEach(p=>{selectedSizes[p.id]=p.sizes;});
 
 const user=tg.initDataUnsafe?.user;if(user){
     const fn=user.first_name||"",ln=user.last_name||"";
@@ -75,33 +80,35 @@ const user=tg.initDataUnsafe?.user;if(user){
     if(fn){ai.src=`https://dicebear.com{encodeURIComponent(fn)}&backgroundColor=000000&textColor=ffffff`;ai.style.display='block';at.style.display='none';}
 }
 function tM(o){document.getElementById('sb').style.left=o?'0':'-280px';document.getElementById('ovr').style.display=o?'block':'none';}
-function tC(o){
-    if(o&&Object.keys(cart).length===0){tg.showAlert("Корзина пуста!");return;}
-    document.getElementById('cart-sheet').style.bottom=o?'0':'-100%';document.getElementById('ovr').style.display=o?'block':'none';
-    if(o){renderCartItems();tg.MainButton.show();}else{uB();}
-}
+
 function tS(id,el){document.getElementById(id).classList.toggle('open');const a=el.querySelector('span');if(a)a.innerText=document.getElementById(id).classList.contains('open')?'▲':'▼';}
 
-// ИСПРАВЛЕННАЯ ФУНКЦИЯ: Теперь кастомное имя четко передается в заголовок
 function sP(pId,el,customTitle){
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
     document.querySelectorAll('.n-btn,.s-btn,.p-card').forEach(b=>b.classList.remove('active'));
     document.getElementById('p-'+pId).classList.add('active');if(el)el.classList.add('active');
     
-    const tls={main:'XS OUTFIT',about:'О магазине',profile:'Профиль',detail:'Товар'};
+    const tls={main:'XS OUTFIT',about:'О магазине',profile:'Профиль',detail:'Товар',cart:'Корзина'};
     document.getElementById('header-title').innerText=customTitle||tls[pId]||'XS OUTFIT';
     
-    if(pId==='shop'||pId==='detail'||pId==='main') uB();else tg.MainButton.hide();tM(0);
+    if(pId==='shop'||pId==='detail'||pId==='main'||pId==='cart') uB();else tg.MainButton.hide();tM(0);
 }
 function sCC(c,el,titleName){currentCat=c;sP('shop',null,titleName);if(el)el.classList.add('active');render();}
 function goC(){document.getElementById('s-cat').classList.add('open');sCC('all',document.getElementById('s-all'),'Все товары');}
-function oCV(){if(Object.keys(cart).length>0){sCC('all',document.getElementById('s-all'),'Все товары');}else{if(window.Telegram?.WebApp)tg.showAlert("Корзина пуста!");else alert("Корзина пуста!");}}
+
+// Функция перехода в отдельный экран корзины
+function oCV(){
+    if(Object.keys(cart).length===0){tg.showAlert("Ваша корзина пуста!");return;}
+    sP('cart',null,'Корзина');
+    renderCartItems();
+}
 
 function render(){
     const cat=document.getElementById('catalog');cat.innerHTML='';
     products.forEach(p=>{
         if(currentCat!=='all'&&p.cat!==currentCat)return;
-        cat.innerHTML+=`<div class="card" onclick="openDetails('${p.id}')"><div class="img-w">${p.emojis}</div><div class="inf-w"><div class="title">${p.title}</div><div class="price">${p.price.toLocaleString()} ₽</div></div></div>`;
+        const emojiStr = p.emojis.join('');
+        cat.innerHTML+=`<div class="card" onclick="openDetails('${p.id}')"><div class="img-w">${emojiStr}</div><div class="inf-w"><div class="title">${p.title}</div><div class="price">${p.price.toLocaleString()} ₽</div></div></div>`;
     });
 }
 function openDetails(id){
@@ -120,27 +127,58 @@ function openDetails(id){
 function selS(id,s){selectedSizes[id]=s;openDetails(id);}
 function tglDetails(id){
     const p=products.find(x=>x.id===id),sz=selectedSizes[id],cKey=`${id}_${sz}`;
-    if(cart[cKey]){delete cart[cKey];}else{cart[cKey]={id:id,name:p.title,price:p.price,size:sz,qty:1};}
+    if(cart[cKey]){
+        delete cart[cKey];
+        delete checkedItems[cKey];
+    }else{
+        cart[cKey]={id:id,name:p.title,price:p.price,size:sz,qty:1};
+        checkedItems[cKey]=true; // По умолчанию галочка на покупку включена
+    }
     openDetails(id);uB();
 }
+
+// Отрисовка товаров на отдельном экране корзины с галочками (чекбоксами)
 function renderCartItems(){
     const list=document.getElementById('cart-items-list');list.innerHTML='';
     Object.keys(cart).forEach(k=>{
         const c=cart[k];
-        list.innerHTML+=`<div class="c-item"><div><b>${c.name}</b> (${c.size})<br><span style="color:#2481cc;">${c.price.toLocaleString()} ₽</span></div>
-        <div class="qty-box"><button class="qty-btn" onclick="chgQ('${k}',-1)">-</button><span>${c.qty}</span><button class="qty-btn" onclick="chgQ('${k}',1)">+</button></div></div>`;
+        const isChecked = checkedItems[k] ? 'checked' : '';
+        list.innerHTML+=`<div class="c-item">
+        <input type="checkbox" class="c-checkbox" ${isChecked} onclick="toggleCheck('${k}')">
+        <div class="c-info"><b>${c.name}</b> (${c.size})<br><span style="color:#2481cc;font-weight:bold;">${c.price.toLocaleString()} ₽</span>
+        <div class="qty-box"><button class="qty-btn" onclick="chgQ('${k}',-1)">-</button><span>${c.qty}</span><button class="qty-btn" onclick="chgQ('${k}',1)">+</button></div></div></div>`;
     });
 }
-function chgQ(k,d){
-    cart[k].qty+=d;if(cart[k].qty<=0)delete cart[k];
-    renderCartItems();uB();if(Object.keys(cart).length===0)tC(0);
+
+// Логика нажатия на галочку товара
+function toggleCheck(k){
+    checkedItems[k] = !checkedItems[k];
+    uB();
 }
+
+function chgQ(k,d){
+    cart[k].qty+=d;if(cart[k].qty<=0){delete cart[k];delete checkedItems[k];}
+    renderCartItems();uB();
+    if(Object.keys(cart).length===0) sP('main',null);
+}
+
 function uB(){
-    const keys=Object.keys(cart),bdg=document.getElementById('c-bdg');let totalQty=0,sum=0;
-    keys.forEach(k=>{totalQty+=cart[k].qty;sum+=(cart[k].price*cart[k].qty);});
+    const keys=Object.keys(cart),bdg=document.getElementById('c-bdg');let totalQty=0,sum=0,checkedCount=0;
+    keys.forEach(k=>{totalQty+=cart[k].qty;if(checkedItems[k]){sum+=(cart[k].price*cart[k].qty);checkedCount++;}});
     bdg.style.display=totalQty===0?'none':'flex';bdg.innerText=totalQty;
-    if(totalQty===0){tg.MainButton.hide();if(document.getElementById('cart-sheet').style.bottom==='0px')tC(0);}
-    else{tg.MainButton.setText("Оформить заказ на "+sum.toLocaleString()+" ₽");if(document.getElementById('p-shop').classList.contains('active')||document.getElementById('p-detail').classList.contains('active')||document.getElementById('cart-sheet').style.bottom==='0px')tg.MainButton.show();else tg.MainButton.hide();}
+    
+    if(!document.getElementById('p-shop').classList.contains('active')&&!document.getElementById('p-detail').classList.contains('active')&&!document.getElementById('p-cart').classList.contains('active')&&!document.getElementById('p-main').classList.contains('active'))return;
+    
+    if(totalQty===0){tg.MainButton.hide();}
+    else{
+        // Синяя Главная кнопка Telegram теперь показывает сумму только за выбранные галочками вещи
+        if(checkedCount===0){
+            tg.MainButton.setText("Выберите товары галочками");
+        }else{
+            tg.MainButton.setText("Оформить заказ на "+sum.toLocaleString()+" ₽");
+        }
+        tg.MainButton.show();
+    }
 }
 function sOL(t){let o=JSON.parse(localStorage.getItem('xs_o')||"[]");o.unshift({d:new Date().toLocaleDateString(),t:t});localStorage.setItem('xs_o',JSON.stringify(o));lH();}
 function lH(){
@@ -148,11 +186,41 @@ function lH(){
     if(o.length>0){let h="";o.forEach(x=>{h+=`<div style="margin-bottom:10px;padding-bottom:5px;border-bottom:1px dashed #eee;"><b>${x.d}</b><br>${x.t.replace(/\n/g,'<br>')}</div>`;});document.getElementById('o-hist').innerHTML=h;}
 }
 function oSp(){tg.openTelegramLink("https://t.me");tM(0);}
+
 tg.onEvent('mainButtonClicked',function(){
-    if(document.getElementById('cart-sheet').style.bottom!=='-100%'&&document.getElementById('cart-sheet').style.bottom!==''){
-        let txt="",sum=0;Object.keys(cart).forEach(k=>{const c=cart[k];txt+=`▪️ ${c.name} (${c.size}) — ${c.qty} шт. х ${c.price.toLocaleString()} ₽\n`;sum+=(c.price*c.qty);});
-        let f=`${txt}\nИтого: ${sum.toLocaleString()} ₽`;sOL(f);tg.sendData("👔 Новый заказ [XS OUTFIT]:\n\n"+f);tg.close();
-    }else{tC(1);}
+    // Если пользователь находится на других экранах, кнопка просто ведет его в раздел Корзины
+    if(!document.getElementById('p-cart').classList.contains('active')){
+        oCV();
+        return;
+    }
+    
+    let txt="",sum=0,hasChecked=false;
+    Object.keys(cart).forEach(k=>{
+        if(checkedItems[k]){
+            const c=cart[k];
+            txt+=`▪️ ${c.name} (${c.size}) — ${c.qty} шт. х ${c.price.toLocaleString()} ₽\n`;
+            sum+=(c.price*c.qty);
+            hasChecked=true;
+        }
+    });
+    
+    if(!hasChecked){
+        tg.showAlert("Пожалуйста, отметьте галочкой хотя бы один товар для покупки!");
+        return;
+    }
+    
+    let f=`${txt}\nИтого: ${sum.toLocaleString()} ₽`;
+    sOL(f);
+    
+    // Удаляем из корзины только те товары, которые были куплены (остальные остаются лежать в корзине)
+    Object.keys(cart).forEach(k=>{
+        if(checkedItems[k]){
+            delete cart[k];
+            delete checkedItems[k];
+        }
+    });
+    
+    tg.sendData("👔 Новый заказ [XS OUTFIT]:\n\n"+f);tg.close();
 });
 render();lH();
 </script></body></html>
