@@ -1,22 +1,26 @@
 <!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>XS OUTFIT</title><script src="https://telegram.org"></script><style>
 :root{--bg:#f9f9fc;--c-bg:#fff;--txt:#111;--hnt:#8e8e93;--prm:#000;--prm-t:#fff;}body{font-family:-apple-system,Arial,sans-serif;background:var(--bg);color:var(--txt);margin:0;padding:70px 16px 30px 16px;-webkit-user-select:none;}
 header{position:fixed;top:0;left:0;right:0;height:60px;background:var(--c-bg);display:grid;grid-template-columns:50px 1fr 50px;align-items:center;padding:0 10px;border-bottom:1px solid rgba(0,0,0,0.05);z-index:100;box-sizing:border-box;}
-.m-t{font-size:24px;background:none;border:none;color:var(--txt);cursor:pointer;padding:0;text-align:left;width:40px;margin-left:5px;}
+.m-t{background:none;border:none;color:var(--txt);cursor:pointer;padding:0;text-align:left;width:40px;margin-left:5px;display:flex;align-items:center;}
+.m-t svg, .c-m svg, .nav-icon svg{width:22px;height:22px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round;}
 header h1{font-size:16px;font-weight:900;text-transform:uppercase;letter-spacing:2px;margin:0;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.c-b{background:none;border:none;position:relative;cursor:pointer;font-size:22px;padding:5px;display:flex;align-items:center;justify-content:flex-end;width:40px;margin-right:5px;}
+.c-b{background:none;border:none;position:relative;cursor:pointer;padding:5px;display:flex;align-items:center;justify-content:flex-end;width:40px;margin-right:5px;color:var(--txt);}
+.c-b svg{width:24px;height:24px;stroke:currentColor;stroke-width:1.8;fill:none;}
 .badge{position:absolute;top:-2px;right:-2px;background:#d32f2f;color:#fff;font-size:10px;font-weight:bold;border-radius:50%;min-width:16px;height:16px;display:none;align-items:center;justify-content:center;padding:2px;box-sizing:border-box;}
 .sb{position:fixed;top:0;left:-280px;width:270px;height:100%;background:var(--c-bg);box-shadow:4px 0 16px rgba(0,0,0,0.1);z-index:200;transition:left 0.3s ease;display:flex;flex-direction:column;box-sizing:border-box;}
-.sb.open{left:0;}.sb-h{display:flex;justify-content:space-between;align-items:center;padding:15px;border-bottom:1px solid rgba(0,0,0,0.05);}.c-m{font-size:22px;background:none;border:none;color:var(--txt);cursor:pointer;}
+.sb.open{left:0;}.sb-h{display:flex;justify-content:space-between;align-items:center;padding:15px;border-bottom:1px solid rgba(0,0,0,0.05);}.c-m{background:none;border:none;color:var(--txt);cursor:pointer;display:flex;align-items:center;}
 .p-card{background:var(--prm);color:var(--prm-t);margin:15px 12px 10px 12px;padding:14px 12px;border-radius:14px;display:flex;align-items:center;gap:12px;cursor:pointer;}
 .m-av{width:46px;height:46px;border-radius:50%;overflow:hidden;background:var(--c-bg);display:flex;align-items:center;justify-content:center;border:2px solid rgba(255,255,255,0.2);flex-shrink:0;}
 .av-img{width:100%;height:100%;object-fit:cover;display:none;}.av-fb{color:var(--prm);font-size:18px;font-weight:800;}
 .u-inf{display:flex;flex-direction:column;gap:1px;min-width:0;}.u-nm{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .u-vp{font-size:11px;opacity:0.6;text-transform:uppercase;}.nav{padding:5px 10px;display:flex;flex-direction:column;gap:4px;overflow-y:auto;flex:1;}
-.n-btn{width:100%;padding:12px 15px;font-size:14px;font-weight:700;text-align:left;border:none;background:transparent;color:var(--txt);border-radius:8px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;}
+.n-btn{width:100%;padding:12px 15px;font-size:14px;font-weight:700;text-align:left;border:none;background:transparent;color:var(--txt);border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:10px;box-sizing:border-box;}
+.n-btn span.arrow{margin-left:auto;font-size:10px;transition:transform 0.2s;}
 .n-btn.active{background:rgba(0,0,0,0.04);border-left:4px solid var(--prm);border-radius:0 8px 8px 0;}
-.sub{display:none;flex-direction:column;gap:2px;padding-left:15px;margin:2px 0 5px 0;}.sub.open{display:flex;}
+.sub{display:none;flex-direction:column;gap:2px;padding-left:35px;margin:2px 0 5px 0;}.sub.open{display:flex;}
 .s-btn{width:100%;padding:10px 15px;font-size:13px;font-weight:600;text-align:left;border:none;background:transparent;color:var(--hnt);cursor:pointer;}
 .s-btn.active{color:var(--txt);font-weight:700;background:rgba(0,0,0,0.03);border-radius:6px;}
+.nav-icon{display:flex;align-items:center;justify-content:center;color:currentColor;}
 .page{display:none;}.page.active{display:block;}
 .w-blk{background:var(--c-bg);border-radius:16px;padding:24px;text-align:center;box-shadow:0 4px 16px rgba(0,0,0,0.02);border:1px solid rgba(0,0,0,0.04);margin-top:10px;}
 .w-logo{font-size:42px;font-weight:900;text-transform:uppercase;color:var(--txt);margin-bottom:5px;}
@@ -24,7 +28,7 @@ header h1{font-size:16px;font-weight:900;text-transform:uppercase;letter-spacing
 .go-btn{width:100%;max-width:200px;padding:12px;background:var(--prm);color:var(--prm-t);border:none;border-radius:10px;font-size:14px;font-weight:bold;cursor:pointer;}
 .grid-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
 .card{background:var(--c-bg);border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.02);border:1px solid rgba(0,0,0,0.04);display:flex;flex-direction:column;cursor:pointer;}
-.img-w{width:100%;height:150px;background:#eee;background-size:cover;background-position:center;}
+.img-w{width:100%;height:140px;background:#eee;background-size:cover;background-position:center;}
 .inf-w{padding:10px;display:flex;flex-direction:column;gap:4px;}
 .title{font-size:14px;font-weight:700;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .price{font-size:14px;font-weight:800;color:var(--txt);}
@@ -45,65 +49,71 @@ header h1{font-size:16px;font-weight:900;text-transform:uppercase;letter-spacing
 .zoom-img{max-width:100%;max-height:85vh;object-fit:contain;transition:transform 0.2s;touch-action:none;cursor:zoom-out;}
 .zoom-close{position:absolute;top:20px;right:20px;background:none;border:none;color:#fff;font-size:28px;cursor:pointer;}
 </style></head><body>
-<header><button class="m-t" onclick="tM(1)">☰</button><h1 id="header-title">XS OUTFIT</h1><button class="c-b" onclick="oCV()">🛒<div class="badge" id="c-bdg">0</div></button></header>
+<header>
+    <button class="m-t" onclick="tM(1)"><svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+    <h1 id="header-title">XS OUTFIT</h1>
+    <button class="c-b" onclick="oCV()"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg><div class="badge" id="c-bdg">0</div></button>
+</header>
 <div style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);z-index:150;display:none;" id="ovr" onclick="tM(0);"></div>
-<div class="sb" id="sb"><div class="sb-h"><div style="font-size:16px;font-weight:800;">XS НАВИГАЦИЯ</div><button class="c-m" onclick="tM(0)">✕</button></div>
-<div class="p-card" onclick="sP('profile',this)"><div class="m-av"><img class="av-img" id="m-av-img" src="" alt="av"><div class="av-fb" id="m-av-txt">U</div></div><div class="u-inf"><div class="u-nm" id="m-unm">Покупатель</div><div class="u-vp">Личный кабинет</div></div></div>
-<div class="nav"><button class="n-btn active" id="m-n-b" onclick="sP('main',this)">🏠 Главная</button><button class="n-btn" onclick="tS('s-cat',this)">🛍️ Каталог <span>▼</span></button>
-<div class="sub" id="s-cat">
-    <button class="s-btn" id="s-all" onclick="sCC('all',this,'Все товары')">⚡ Все товары</button>
-    <button class="s-btn" onclick="sCC('out',this,'Верхняя одежда')">🧥  Верхняя одежда</button>
-    <button class="s-btn" onclick="sCC('tsh',this,'Футболки')">👕 Футболки</button>
-    <button class="s-btn" onclick="sCC('pnt',this,'Штаны')">👖 Штаны</button>
-    <button class="s-btn" onclick="sCC('sh',this,'Обувь')">👟 Обувь</button>
+<div class="sb" id="sb">
+    <div class="sb-h"><div style="font-size:14px;font-weight:900;letter-spacing:1px;text-transform:uppercase;color:var(--hnt);">XS NAVIGATION</div><button class="m-t" onclick="tM(0)"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>
+    <div class="p-card" onclick="sP('profile',this)"><div class="m-av"><img class="av-img" id="m-av-img" src="" alt="av"><div class="av-fb" id="m-av-txt">U</div></div><div class="u-inf"><div class="u-nm" id="m-unm">Покупатель</div><div class="u-vp">Личный кабинет</div></div></div>
+    <div class="nav">
+        <button class="n-btn active" id="m-n-b" onclick="sP('main',this)"><div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></div> Главная</button>
+        <button class="n-btn" onclick="tS('s-cat',this)"><div class="nav-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></div> Каталог <span class="arrow">▼</span></button>
+        <div class="sub" id="s-cat">
+            <button class="s-btn" id="s-all" onclick="sCC('all',this,'Все товары')">// Все товары</button>
+            <button class="s-btn" onclick="sCC('out',this,'Верхняя одежда')">//  Верхняя одежда</button>
+            <button class="s-btn" onclick="sCC('tsh',this,'Футболки')">// Футболки</button>
+            <button class="s-btn" onclick="sCC('pnt',this,'Штаны')">// Штаны</button>
+            <button class="s-btn" onclick="sCC('sh',this,'Обувь')">// Обувь</button>
+        </div>
+        <button class="n-btn" onclick="oSp()"><div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div> Поддержка</button>
+        <button class="n-btn" onclick="tS('s-oth',this)"><div class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></div> Остальное <span class="arrow">▼</span></button>
+        <div class="sub" id="s-oth"><button class="s-btn" onclick="sP('about',this)">// О магазине</button></div>
+    </div>
 </div>
-<button class="n-btn" onclick="oSp()">💬 Поддержка</button><button class="n-btn" onclick="tS('s-oth',this)">⚙️ Остальное <span>▼</span></button>
-<div class="sub" id="s-oth"><button class="s-btn" id="s-oth-btn" onclick="sP('about',this)">ℹ️ О магазине</button></div></div></div>
 <div class="container">
 <div class="page active" id="p-main"><div class="w-blk"><div class="w-logo">XS OUTFIT</div><div style="font-size:20px;font-weight:700;margin-bottom:10px;" id="w-tl">Добро пожаловать!</div><p class="w-txt">Концептуальный премиум-магазин мужской одежды.</p><button class="go-btn" onclick="goC()">В каталог ➔</button></div></div>
 <div class="page" id="p-shop"><div class="grid-list" id="catalog"></div></div>
 <div class="page" id="p-detail"><div class="p-details" id="product-detail-view"></div></div>
-<div class="page" id="p-cart"><div style="font-size:16px;font-weight:800;margin:10px 0 15px 0;">ВЫБЕРИТЕ ТОВАРЫ К ПОКУПКЕ</div><div id="cart-items-list"></div></div>
-<div class="page" id="p-profile"><div style="font-size:16px;font-weight:800;margin:15px 0 12px 0;">АККАУНТ</div><div class="inf-c"><b style="font-size:16px;" id="p-fn">Покупатель</b><div style="font-size:13px;color:var(--hnt);margin-top:5px;" id="p-id">ID: Не определен</div></div><div style="font-size:16px;font-weight:800;margin:25px 0 12px 0;">ИСТОРИЯ ПОКУПОК</div><div class="inf-c" id="o-hist">У вас пока нет оформленных заказов.</div></div>
-<div class="page" id="p-about"><div style="font-size:16px;font-weight:800;margin:15px 0 12px 0;">О МАГАЗИНЕ XS</div><div class="inf-c"><b>XS OUTFIT</b> — пространство стиля.<br><br>📦 <b>Доставка:</b> СДЭК, Почта России.</div></div>
-</div>
-<div class="zoom-modal" id="zoom-modal" onclick="closeZoom()"><button class="zoom-close">✕</button><img class="zoom-img" id="zoom-img" src="" alt="zoom"></div>
+<div class="page" id="p-cart"><div style="font-size:14px;font-weight:900;letter-spacing:0.5px;color:var(--hnt);margin:10px 0 15px 0;text-transform:uppercase;">// Список покупок</div><div id="cart-items-list"></div></div>
+<div class="page" id="p-profile"><div style="font-size:14px;font-weight:900;letter-spacing:0.5px;color:var(--hnt);margin:15px 0 12px 0;text-transform:uppercase;">// Аккаунт</div><div class="inf-c"><b style="font-size:16px;" id="p-fn">Покупатель</b><div style="font-size:13px;color:var(--hnt);margin-top:5px;" id="p-id">ID: Не определен</div></div><div style="font-size:14px;font-weight:900;letter-spacing:0.5px;color:var(--hnt);margin:25px 0 12px 0;text-transform:uppercase;">// История покупок</div><div class="inf-c" id="o-hist">У вас пока нет оформленных заказов.</div></div>
+<div class="page" id="p-about"><div style="font-size:14px;font-weight:900;letter-spacing:0.5px;color:var(--hnt);margin:15px 0 12px 0;text-transform:uppercase;">// О магазине XS</div><div class="inf-c"><b>XS OUTFIT</b> — пространство стиля.<br><br>📦 <b>Доставка:</b> СДЭК, Почта России.</div></div>
+</div><div class="zoom-modal" id="zoom-modal" onclick="closeZoom()"><button class="zoom-close">✕</button><img class="zoom-img" id="zoom-img" src="" alt="zoom"></div>
 <script>
 const tg=window.Telegram?.WebApp||{MainButton:{show(){},hide(){},setText(){}},onEvent(){},close(){}};
 const products=[
-    // ВЕРХНЯЯ ОДЕЖДА (out)
     {id:'o1',cat:'out',images:['https://unsplash.com'],title:'Шерстяное Пальто',price:12500,sizes:['M','L','XL'],desc:'Премиальное шерстяное пальто классического кроя.'},
-    {id:'o2',cat:'out',images:['https://unsplash.com'],title:'Кожаная Куртка',price:9800,sizes:['S','M','L'],desc:'Куртка из мягкой эко-кожи с металлической фурнитурой.'},
-    // ФУТБОЛКИ (tsh)
+    {id:'o2',cat:'out',images:['https://unsplash.com'],title:'Кожаная Куртка',price:9800,sizes:['S','M','L'],desc:'Куртка из мягкой эко-кожи.'},
     {id:'t1',cat:'tsh',images:['https://unsplash.com'],title:'Черная Футболка Basic',price:1900,sizes:['S','M','L'],desc:'Плотный премиум-хлопок 240г/м.'},
     {id:'t2',cat:'tsh',images:['https://unsplash.com'],title:'Белая Футболка Oversize',price:2400,sizes:['M','L','XL'],desc:'Уличный свободный силуэт.'},
-    // ШТАНЫ (pnt)
     {id:'p1',cat:'pnt',images:['https://unsplash.com'],title:'Джинсы Regular-Fit',price:5900,sizes:['31','32','34'],desc:'Плотный деним, прямой крой.'},
     {id:'p2',cat:'pnt',images:['https://unsplash.com'],title:'Карго Брюки Graphite',price:4800,sizes:['S','M','L'],desc:'Технологичные брюки-карго.'},
-    // ОБУВЬ (sh)
-    {id:'s1',cat:'sh',images:['https://unsplash.com'],title:'Кроссовки Urban Leather',price:8900,sizes:['41','42','43'],desc:'Натуральная кожа, ортопедическая подошва.'},
+    {id:'s1',cat:'sh',images:['https://unsplash.com'],title:'Кроссовки Urban Leather',price:8900,sizes:['41','42','43'],desc:'Натуральная кожа.'},
     {id:'s2',cat:'sh',images:['https://unsplash.com'],title:'Минималистичные Кеды',price:6200,sizes:['40','41','42'],desc:'Безупречный белый цвет.'}
 ];
-let cart={},selectedSizes={},currentCat='all',checkedItems={};products.forEach(p=>{selectedSizes[p.id]=p.sizes[0];});
+let cart={},selectedSizes={},currentCat='all',checkedItems={};products.forEach(p=>{selectedSizes[p.id]=p.sizes;});
 try {
     if(window.Telegram && window.Telegram.WebApp){
         tg.ready();tg.expand();
         const user=tg.initDataUnsafe?.user;
         if(user && user.first_name){
             const fn=user.first_name,ln=user.last_name || "";
-            document.getElementById('w-tl').innerText=`Привет, ${fn}!`;
-            document.getElementById('m-unm').innerText=fn;
-            document.getElementById('p-fn').innerText=(fn+" "+ln).trim();
+            document.getElementById('w-tl').innerText=`Привет, ${fn}!`;document.getElementById('m-unm').innerText=fn;document.getElementById('p-fn').innerText=(fn+" "+ln).trim();
             if(user.id)document.getElementById('p-id').innerText="ID: "+user.id;
             const ai=document.getElementById('m-av-img'),at=document.getElementById('m-av-txt');
-            ai.src=`https://dicebear.com{encodeURIComponent(fn)}&backgroundColor=000000&textColor=ffffff`;
-            ai.style.display='block';at.style.display='none';
+            ai.src=`https://dicebear.com{encodeURIComponent(fn)}&backgroundColor=000000&textColor=ffffff`;ai.style.display='block';at.style.display='none';
         }
     }
 } catch(e) {}
 
 function tM(o){document.getElementById('sb').style.left=o?'0':'-280px';document.getElementById('ovr').style.display=o?'block':'none';}
-function tS(id,el){document.getElementById(id).classList.toggle('open');const a=el.querySelector('span');if(a)a.innerText=document.getElementById(id).classList.contains('open')?'▲':'▼';}
+function tS(id,el){
+    document.getElementById(id).classList.toggle('open');
+    const a=el.querySelector('span.arrow');
+    if(a) a.style.transform = document.getElementById(id).classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
+}
 
 function sP(pId,el,customTitle){
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -127,7 +137,7 @@ function render(){
 function openDetails(id){
     const p=products.find(x=>x.id===id);sP('detail',null,'XS OUTFIT');
     let sH='';p.sizes.forEach(s => {
-        const activeSize = selectedSizes[id] || p.sizes[0];
+        const activeSize = selectedSizes[id] || p.sizes;
         const aCls = activeSize === s ? 'active' : '';
         sH+=`<button class="sz-b ${aCls}" onclick="selS('${p.id}','${s}')">${s}</button>`;
     });
@@ -147,7 +157,7 @@ function closeZoom(){document.getElementById('zoom-modal').classList.remove('ope
 
 function selS(id,s){selectedSizes[id]=s;openDetails(id);}
 function tglDetails(id){
-    const p=products.find(x=>x.id===id),sz=selectedSizes[id] || p.sizes[0],cKey=`${id}_${sz}`;
+    const p=products.find(x=>x.id===id),sz = selectedSizes[id] || p.sizes,cKey=`${id}_${sz}`;
     if(cart[cKey]){delete cart[cKey];delete checkedItems[cKey];}else{cart[cKey]={id:id,name:p.title,price:p.price,size:sz,qty:1};checkedItems[cKey]=true;}
     openDetails(id);uB();
 }
